@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verifikasi OTP</title>
+    <meta property="og:title" content="Login Hotel Telaga Mas" />
+    <meta property="og:description" content="Hotel Telaga Mas " />
+    <meta property="og:image" content="{{ url_for('static', filename = 'img/image-hotel/foto-depan-hotel.jpg') }}" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../static/style.css">
+    <link rel="stylesheet" href="../../static/style/login.css">
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
+
+    <style>
+        .spinner-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .spinner-overlay.hidden {
+            display: none;
+        }
+
+        .blurred {
+            filter: blur(5px);
+        }
+    </style>
+</head>
+<body>
+    <div class="spinner-overlay hidden" id="loading-spinner">
+        <dotlottie-player src="https://lottie.host/ecc98912-6550-4a1b-8622-df5acef885fd/xcW4L0NEca.json" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></dotlottie-player>
+    </div>
+    <section class="container" data-aos="zoom-in" data-aos-duration="500" id="main-content">
+        <header class="title">Verifikasi OTP</header>
+        <form id="otp-form" class="form" method="POST">
+            <div class="field">
+                <div class="control">
+                    <div class="wrap-input-9">
+                        <input type="hidden" class="input" type="email" name="email" value="{{ email }}" readonly>
+                        <span class="focus-border">
+                            <i></i>
+                        </span>
+                    </div>
+                </div>
+                <p class="help is-danger">Alamat Email yang valid wajib diisi</p>
+            </div>
+
+            <div class="field">
+                <label class="label required-field">Kode OTP</label>
+                <div class="control">
+                    <div class="wrap-input-9">
+                        <input class="input" type="text" name="otp" placeholder="Masukkan kode OTP" />
+                    </div>
+                </div>
+                <p class="help is-danger">Kode OTP wajib diisi</p>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <button type="submit" class="button is-primary">Verifikasi</button>
+                </div>
+            </div>
+            <div class="field">
+                <p class="compact">Sudah punya akun? <a href="{{ url_for('login') }}">Login di sini</a></p>
+                <p class="compact">Back to <a href="{{ url_for('home') }}">Home</a></p>
+            </div>
+        </form>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#otp-form').on('submit', function(event) {
+                event.preventDefault();
+                $('#loading-spinner').removeClass('hidden');
+                $('#main-content').addClass('blurred');
+                $('.button.is-primary').prop('disabled', true);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/verify_otp',
+                    data: $('#otp-form').serialize(),
+                    success: function(response) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Verifikasi berhasil!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(() => {
+                            window.location.href = '/login';
+                        });
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        const errorMessage = xhr.responseJSON ? xhr.responseJSON.error : "Terjadi kesalahan, silakan coba lagi.";
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: errorMessage
+                        });
+                    },
+                    complete: function() {
+                        $('#loading-spinner').addClass('hidden');
+                        $('#main-content').removeClass('blurred');
+                        $('.button.is-primary').prop('disabled', false);
+                    }
+                });
+            });
+            AOS.init();
+        });
+    </script>
+</body>
+</html>

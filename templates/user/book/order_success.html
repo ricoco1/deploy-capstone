@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Telaga Mas - Order Confirmation</title>
+    <meta property="og:title" content="Reservasi Hotel Telaga Mas" />
+    <meta property="og:description" content="Hotel Telaga Mas " />
+    <meta property="og:image" content="{{ url_for('static', filename = 'img/image-hotel/foto-depan-hotel.jpg') }}" />
+
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/style/style.css">
+
+    <style>
+        .success-message {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .card {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card-body {
+            padding: 30px;
+        }
+
+        .footer-spacing {
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    {% include 'user/book/header.html' %}
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h4 class="card-title success-message">Pembayaran Berhasil!</h4>
+                        <p class="card-text">Terima kasih, pesanan Anda telah berhasil dibayar.</p>
+                        <p class="card-text">Anda akan diarahkan ke halaman History Reservasi dalam 5 detik.</p>
+                        <p class="card-text">Jika tidak diarahkan, bisa klik <a href="{{ url_for('user_reservasi') }}">di sini</a>.</p>
+                        <a href="{{ url_for('user_reservasi') }}" class="btn btn-primary">Lihat Order History</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-spacing"></div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        setTimeout(function() {
+            window.location.href = "{{ url_for('user_reservasi') }}";
+        }, 5000);
+    </script>
+</body>
+
+</html>

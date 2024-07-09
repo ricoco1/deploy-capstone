@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Admin | Hotel Telaga Mas</title>
+    <meta property="og:title" content="Reservasi Hotel Telaga Mas" />
+    <meta property="og:description" content="Hotel Telaga Mas " />
+    <meta property="og:image" content="{{ url_for('static', filename='img/image-hotel/foto-depan-hotel.jpg') }}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="../../static/style/register.css">
+    <link rel="stylesheet" href="../../static/style/login.css">
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
+
+</head>
+<body>
+    <div class="spinner-overlay hidden" id="loading-spinner">
+        <dotlottie-player src="https://lottie.host/ecc98912-6550-4a1b-8622-df5acef885fd/xcW4L0NEca.json" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></dotlottie-player>
+    </div>
+    <section class="container" data-aos="zoom-in" data-aos-duration="500">
+        <header class="title">Register Admin</header>
+
+        <!-- Flash Messages -->
+        <div id="flash-messages" class="notification is-danger" style="display: none;">
+            <p id="flash-message-content"></p>
+        </div>
+
+        <form id="registration-form" class="form">
+            <div class="field">
+                <label class="label required-field">Nama Lengkap</label>
+                <div class="control">
+                    <input class="input" type="text" name="fullName" placeholder="Masukkan nama lengkap" />
+                </div>
+                <p class="help is-danger">Nama Lengkap wajib diisi</p>
+            </div>
+
+            <div class="field">
+                <label class="label required-field">Alamat Email</label>
+                <div class="control">
+                    <input class="input" type="email" name="email" placeholder="Masukkan alamat email" />
+                </div>
+                <p class="help is-danger">Alamat Email yang valid wajib diisi</p>
+            </div>
+
+            <div class="field">
+                <label class="label required-field">Kata Sandi</label>
+                <div class="control">
+                    <input class="input" type="password" name="password" placeholder="Masukkan kata sandi" />
+                </div>
+                <p class="help is-danger">Kata Sandi wajib diisi dan harus minimal 8 karakter, mengandung setidaknya satu angka dan satu huruf besar</p>
+            </div>
+
+            <div class="field">
+                <label class="label required-field">Konfirmasi Kata Sandi</label>
+                <div class="control">
+                    <input class="input" type="password" name="confirmPassword" placeholder="Konfirmasi kata sandi" />
+                </div>
+                <p class="help is-danger">Kata Sandi harus sama</p>
+            </div>
+
+            <div class="field">
+                <label class="label required-field">Role</label>
+                <div class="control">
+                    <div class="select">
+                        <select name="role">
+                            <option value="" hidden>Pilih Role</option>
+                            <option value="Admin">Admin</option>
+                        </select>
+                    </div>
+                </div>
+                <p class="help is-danger">Role wajib dipilih</p>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <button type="submit" class="button is-primary">Daftar</button>
+                </div>
+            </div>
+
+            <div class="field">
+                <p>Sudah punya akun? <a href="{{ url_for('login_admin') }}">Login di sini</a></p>
+            </div>
+        </form>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#registration-form').on('submit', function (event) {
+                event.preventDefault();
+                let isValid = true;
+
+                $('input, select').each(function () {
+                    const $input = $(this);
+                    const $helpText = $input.closest('.field').find('.help.is-danger');
+
+                    if ($input.is('select') && !$input.val()) {
+                        $helpText.show();
+                        isValid = false;
+                    } else if (!$input.is('select') && $input.val().trim() === '') {
+                        $helpText.show();
+                        isValid = false;
+                    } else {
+                        $helpText.hide();
+                    }
+                });
+
+                const password = $('input[name="password"]').val();
+                const confirmPassword = $('input[name="confirmPassword"]').val();
+                const passwordPattern = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+
+                if (!passwordPattern.test(password)) {
+                    $('input[name="password"]').closest('.field').find('.help.is-danger').show();
+                    isValid = false;
+                } else {
+                    $('input[name="password"]').closest('.field').find('.help.is-danger').hide();
+                }
+
+                if (password !== confirmPassword) {
+                    $('input[name="confirmPassword"]').closest('.field').find('.help.is-danger').show();
+                    isValid = false;
+                } else {
+                    $('input[name="confirmPassword"]').closest('.field').find('.help.is-danger').hide();
+                }
+
+                if (isValid) {
+                    $('#loading-spinner').addClass('hidden'); // Hide the Lottie animation
+                    $('#main-content').removeClass('blurred');
+                    $('.button.is-primary').prop('disabled', true); // Disable the submit button
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/admin/register',
+                        data: $('#registration-form').serialize(),
+                        success: function (response) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Pendaftaran berhasil!',
+                                showConfirmButton: false,
+                                timer: 1500
+                            }).then(() => {
+                                window.location.href = '/admin/login';
+                            });
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            const errorMessage = xhr.responseJSON.error;
+                            $('#loading-spinner').addClass('hidden');
+                            $('#main-content').removeClass('blurred');
+                            $('#flash-message-content').text(errorMessage);
+                            $('#flash-messages').show();
+                        }
+                    });
+                }
+            });
+            AOS.init();
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tambah Kamar - Hotel Telaga Mas</title>
+    {% include 'admin/import/head_import.html' %}
+
+</head>
+
+<body>
+    {% include 'admin/room/sidebar.html' %}
+
+    <div class="container">
+        <h1 class="title">Kelola Harga Kamar</h1>
+        
+        <form action="{{ url_for('admin_add_room') }}" method="post">
+            <div class="form-group">
+                <label for="roomType">Tipe Kamar</label>
+                <select class="form-control" id="roomType" name="roomType" required>
+                    <option value="Deluxe">Kamar Deluxe</option>
+                    <option value="Family Deluxe">Kamar Deluxe Family</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="date">Tanggal</label>
+                <input type="date" class="form-control" id="date" name="date" required>
+            </div>
+            <div class="form-group">
+                <label for="price">Stok Kamar</label>
+                <input type="number" class="form-control" id="stock" name="stock" required>
+            </div>
+            <div class="form-group">
+                <label for="price">Harga Normal</label>
+                <input type="number" class="form-control" id="price" name="price" required>
+            </div>
+            <div class="form-group">
+                <label for="price">Harga Diskon</label>
+                <input type="number" class="form-control" id="discount_price" name="discount_price" required>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename = 'style/admin/js/main.js') }}"></script>
+</body>
+
+</html>

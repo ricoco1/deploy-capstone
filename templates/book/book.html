@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book | Hotel Telaga Mas</title>
+    <meta property="og:title" content="Reservasi Hotel Telaga Mas" />
+    <meta property="og:description" content="Hotel Telaga Mas " />
+    <meta property="og:image" content="{{ url_for('static', filename = 'img/image-hotel/foto-depan-hotel.jpg') }}" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Edu+TAS+Beginner:wght@400..700&family=Permanent+Marker&display=swap" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../../../static/style/style.css">
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Library dayjs -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/dayjs.min.js"></script>
+
+    <style>
+        /* Media Query untuk tampilan mobile */
+        @media (max-width: 767.98px) {
+            .table thead {
+                display: none;
+            }
+            .table, .table tbody, .table tr, .table td {
+                display: block;
+                width: 100%;
+            }
+            .table td {
+                text-align: right;
+                padding-left: 50%;
+                position: relative;
+            }
+            .table td:before {
+                content: attr(data-label);
+                position: absolute;
+                left: 0;
+                width: 50%;
+                padding-left: 15px;
+                font-weight: bold;
+                text-align: left;
+            }
+            .table td:last-child {
+                text-align: center;
+                padding-left: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    {% include 'book/header_indo.html' %}
+
+    <div class="container">
+        <div class="row">
+            <div class="row mb-4">
+                <div class="col-lg-12 mt-3">
+                    <form method="get" action="/book">
+                        <div class="form-row align-items-center">
+                            <div class="col-auto">
+                                <label for="checkInDate" class="col-form-label">Check-In</label>
+                            </div>
+                            <div class="col-auto">
+                                <input type="date" class="form-control mb-2" id="checkInDate" name="check_in_date" placeholder="Tanggal Check-In">
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-primary mb-2">Cari</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="room-card">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            {% include 'user/book/deluxe_room_details.html' %}
+                        </div>
+                        <div class="col-md-8 table">
+                            <table class="table table-bordered mt-4">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Pilihan Kamar</th>
+                                        <th>Tamu</th>
+                                        <th>Harga/kamar/malam</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td data-label="Pilihan Kamar">
+                                            <h5>Deluxe Room</h5>
+                                            <p>Tanpa Sarapan</p>
+                                            <p><i class="fas fa-times-circle"></i> Tidak Bisa Refund</p>
+                                            <p><i class="fas fa-bed"></i> 1 Double Bed atau 1 Ranjang Twin</p>
+                                        </td>
+                                        <td class="text-center" data-label="Tamu">
+                                            <i class="fas fa-user"></i>
+                                            <i class="fas fa-user"></i>
+                                        </td>
+                                        <td data-label="Harga/kamar/malam">
+                                            {% if deluxe_room %}
+                                            <p class="original-price">Rp {{ format_currency(deluxe_room.price | default(0)) }}</p>
+                                            <p id="deluxe-price" class="price">Rp {{ format_currency(deluxe_room.discount_price | default(0)) }}</p>
+                                            <p>Di luar pajak & biaya</p>
+                                            {% else %}
+                                            <p>Tidak ada kamar tersedia untuk tanggal ini.</p>
+                                            {% endif %}
+                                        </td>
+                                        <td data-label="">
+                                            {% if deluxe_room %}
+                                                {% if deluxe_room.stock == 0 %}
+                                                    <span class="text-danger">Stok kamar kosong</span>
+                                                    <button class="btn btn-secondary btn-pilih" disabled>Pilih</button>
+                                                {% elif deluxe_room.stock < 5 %}
+                                                    <span class="text-warning">Stok sisa sedikit</span>
+                                                    {% if tanggal_cek_in and tanggal_cek_in < today %}
+                                                        <button class="btn btn-secondary btn-pilih" disabled>Pilih</button>
+                                                    {% else %}
+                                                        <a href="{{ url_for('user_deluxe_book', check_in_date=request.args.get('check_in_date')) }}" class="btn btn-primary btn-pilih">Pilih</a>
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if tanggal_cek_in and tanggal_cek_in < today %}
+                                                        <button class="btn btn-secondary btn-pilih" disabled>Pilih</button>
+                                                    {% else %}
+                                                        <a href="{{ url_for('user_deluxe_book', check_in_date=request.args.get('check_in_date')) }}" class="btn btn-primary btn-pilih">Pilih</a>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% else %}
+                                                <button class="btn btn-secondary btn-pilih" disabled>Pilih</button>
+                                            {% endif %}
+                                        </td>                                     
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="room-card">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            {% include 'user/book/family_deluxe_room_details.html' %}
+                        </div>
+                        <div class="col-md-8 table">
+                            <table class="table table-bordered mt-4">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Pilihan Kamar</th>
+                                        <th>Tamu</th>
+                                        <th>Harga/kamar/malam</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td data-label="Pilihan Kamar">
+                                            <h5>Deluxe Family Room</h5>
+                                            <p>Tanpa Sarapan</p>
+                                            <p><i class="fas fa-times-circle"></i> Tidak Bisa Refund</p>
+                                            <p><i class="fas fa-bed"></i> 2 Double Bed</p>
+                                        </td>
+                                        <td class="text-center" data-label="Tamu">
+                                            <i class="fas fa-user"></i>
+                                            <i class="fas fa-user"></i>
+                                            <i class="fas fa-user"></i>
+                                        </td>
+                                        <td data-label="Harga/kamar/malam">
+                                            {% if deluxe_family_room %}
+                                            <p class="original-price">Rp {{ format_currency(deluxe_family_room.price | default(0)) }}</p>
+                                            <p id="deluxe-price" class="price">Rp {{ format_currency(deluxe_family_room.discount_price | default(0)) }}</p>
+                                            <p>Di luar pajak & biaya</p>
+                                            {% else %}
+                                            <p>Tidak ada kamar tersedia untuk tanggal ini.</p>
+                                            {% endif %}
+                                        </td>
+                                        <td data-label="">
+                                            {% if deluxe_family_room %}
+                                                {% if deluxe_family_room.stock == 0 %}
+                                                    <span class="text-danger">Stok kamar kosong</span>
+                                                    <button class="btn btn-secondary btn-pilih" disabled>Pilih</button>
+                                                {% elif deluxe_family_room.stock < 5 %}
+                                                    <span class="text-warning">Stok sisa sedikit</span>
+                                                    {% if tanggal_cek_in and tanggal_cek_in < today %}
+                                                        <button class="btn btn-secondary btn-pilih" disabled>Pilih</button>
+                                                    {% else %}
+                                                        <a href="{{ url_for('user_family_deluxe_book', check_in_date=request.args.get('check_in_date')) }}" class="btn btn-primary btn-pilih">Pilih</a>
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if tanggal_cek_in and tanggal_cek_in < today %}
+                                                        <button class="btn btn-secondary btn-pilih" disabled>Pilih</button>
+                                                    {% else %}
+                                                        <a href="{{ url_for('user_family_deluxe_book', check_in_date=request.args.get('check_in_date')) }}" class="btn btn-primary btn-pilih">Pilih</a>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% else %}
+                                                <button class="btn btn-secondary btn-pilih" disabled>Pilih</button>
+                                            {% endif %}
+                                        </td>       
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% include 'user/book/modal_room.html' %}
+
+    </div>
+    {% include 'footer/footer.html' %}
+
+    <!-- Font Awesome -->
+    {% include 'user/home/script_import.html' %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var checkInDateInput = document.getElementById('checkInDate');
+            var today = dayjs();
+            var maxDate = today.add(3, 'month').format('YYYY-MM-DD'); // Tambahkan 3 bulan ke tanggal saat ini
+            checkInDateInput.setAttribute('min', today.format('YYYY-MM-DD'));
+            checkInDateInput.setAttribute('max', maxDate); // Set maksimum 3 bulan ke depan
+            document.querySelector('form').addEventListener('submit', function(event) {
+                if (!checkInDateInput.value) {
+                    alert('Tanggal Check-In wajib diisi.');
+                    event.preventDefault();
+                }
+            });
+
+            checkInDateInput.addEventListener('change', function() {
+                var checkInDate = new Date(checkInDateInput.value);
+                var todayDate = new Date(today.format('YYYY-MM-DD'));
+
+                var buttons = document.querySelectorAll('.btn-pilih');
+
+                buttons.forEach(function(button) {
+                    if (checkInDate < todayDate) {
+                        button.disabled = true;
+                    } else {
+                        button.disabled = false;
+                    }
+                });
+            });
+        });
+    </script>
+    
+</body>
+
+</html>

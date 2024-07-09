@@ -1,0 +1,154 @@
+.container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 15px;
+}
+
+@media (min-width: 768px) {
+    .container {
+        width: 75%;
+        margin: 0 12.5%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        width: 50%;
+        margin: 0 25%;
+    }
+}
+
+.required-field::after {
+    content: " *";
+    color: red;
+}
+
+.help.is-danger {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .field label {
+        font-size: 0.9em;
+    }
+
+    .field input, 
+    .field select, 
+    .field button {
+        font-size: 0.9em;
+    }
+}
+.spinner-border {
+    display: none;
+    width: 3rem;
+    height: 3rem;
+    margin: auto;
+}
+
+.compact {
+    margin: 0px;
+    padding: 0px;
+    font-size: 12px;
+}
+
+.wrap-input-9 .input {
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #f5f6fd;
+    border: 1px solid #ccc;
+    padding: 7px 14px 9px;
+    transition: 0.4s;
+}
+
+.wrap-input-9 .input:focus {
+    outline: none;
+}
+
+.wrap-input-9 {
+    width: 100%;
+    position: relative;
+}
+
+.wrap-input-9 .input ~ .focus-border:before,
+.wrap-input-9 .input ~ .focus-border:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 2px;
+    background-color: #6c5dd3;
+    transition: 0.2s;
+    transition-delay: 0.2s;
+}
+
+.wrap-input-9 .input ~ .focus-border:after {
+    top: auto;
+    bottom: 0;
+    right: auto;
+    left: 0;
+    transition-delay: 0.6s;
+}
+
+.wrap-input-9 .input ~ .focus-border i:before,
+.wrap-input-9 .input ~ .focus-border i:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 0;
+    background-color: #6c5dd3;
+    transition: 0.2s;
+}
+
+.wrap-input-9 .input ~ .focus-border i:after {
+    left: auto;
+    right: 0;
+    top: auto;
+    bottom: 0;
+    transition-delay: 0.4s;
+}
+
+.wrap-input-9 .input:focus ~ .focus-border:before,
+.wrap-input-9 .input:focus ~ .focus-border:after {
+    width: 100%;
+    transition: 0.2s;
+    transition-delay: 0.6s;
+}
+
+.wrap-input-9 .input:focus ~ .focus-border:after {
+    transition-delay: 0.2s;
+}
+
+.wrap-input-9 .input:focus ~ .focus-border i:before,
+.wrap-input-9 .input:focus ~ .focus-border i:after {
+    height: 100%;
+    transition: 0.2s;
+}
+
+.wrap-input-9 .input:focus ~ .focus-border i:after {
+    transition-delay: 0.4s;
+}
+.spinner-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.spinner-overlay.hidden {
+    display: none;
+}
+
+.blurred {
+    filter: blur(5px);
+}

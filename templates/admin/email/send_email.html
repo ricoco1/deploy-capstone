@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kirim Email Promosi - Hotel Telaga Mas</title>
+    {% include 'admin/import/head_import.html' %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .container {
+            margin-top: 20px;
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #777777;
+            font-size: 12px;
+        }
+        .selected-email {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+        .remove-email {
+            background: none;
+            border: none;
+            color: red;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    {% include 'admin/email/sidebar.html' %}
+    <div class="container">
+        <h1 class="title">Kirim Email Promosi</h1>
+        <div class="card">
+            <div class="card-body">
+                <form id="sendEmailForm" method="POST" action="{{ url_for('admin_send_email') }}" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="searchEmail">Pilih Pengguna</label>
+                        <input type="email" id="searchEmail" class="form-control" placeholder="Cari pengguna berdasarkan email">
+                        <div id="emailList" class="list-group mt-2"></div>
+                        <div class="mt-2">
+                            <button type="button" class="btn btn-link" id="addToList">Tambahkan ke Daftar</button>
+                        </div>
+                        <div class="form-check mt-2">
+                            <input type="checkbox" class="form-check-input" id="sendToAll">
+                            <label class="form-check-label" for="sendToAll">Kirim ke seluruh email</label>
+                        </div>
+                    </div>
+                    <div id="selectedEmails" class="card mt-3">
+                        <div class="card-body">
+                            <p>Daftar Email Terpilih Akan Tampil DIsini</p>
+                        </div>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="kodeVoucher">Kode Voucher</label>
+                        <select id="kodeVoucher" name="kodeVoucher" class="form-control">
+                            {% for discount in discounts %}
+                                <option value="{{ discount.kode }}">{{ discount.kode }} - {{ discount.deskripsi }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="emailHeader">Header Email</label>
+                        <input type="text" id="emailHeader" name="emailHeader" class="form-control" placeholder="Masukkan header email">
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="emailImage">Gambar untuk Email</label>
+                        <input type="file" id="emailImage" name="emailImage" class="form-control" accept="image/*">
+                    </div>
+                    <div class="form-group">
+                        <label for="emailContent">Isi Email</label>
+                        <textarea id="emailContent" name="emailContent" class="form-control" rows="10" placeholder="Masukkan konten email di sini"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Kirim Email</button>
+                        <button type="reset" class="btn btn-light">Reset</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <p>&copy; 2024 Hotel Telaga Mas. Hak cipta dilindungi.</p>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            let selectedEmails = [];
+    
+            $('#searchEmail').on('input', function () {
+                const query = $(this).val();
+                if (query.length > 2) {
+                    $.getJSON("{{ url_for('admin_search_users') }}", { email: query }, function (data) {
+                        let emailList = '';
+                        if (data.length > 0) {
+                            data.forEach(user => {
+                                emailList += `<a href="#" class="list-group-item list-group-item-action email-item" data-email="${user.email}">${user.email}</a>`;
+                            });
+                        } else {
+                            emailList = '<a href="#" class="list-group-item list-group-item-action disabled">Email tidak ditemukan</a>';
+                        }
+                        $('#emailList').html(emailList);
+                    });
+                } else {
+                    $('#emailList').html('');
+                }
+            });
+    
+            $(document).on('click', '.email-item', function (e) {
+                e.preventDefault();
+                const email = $(this).data('email');
+                if (!selectedEmails.includes(email)) {
+                    selectedEmails.push(email);
+                    updateSelectedEmails();
+                }
+            });
+    
+            $('#addToList').on('click', function () {
+                const email = $('#searchEmail').val();
+                if (email && !selectedEmails.includes(email)) {
+                    selectedEmails.push(email);
+                    updateSelectedEmails();
+                }
+            });
+    
+            $('#sendToAll').on('change', function () {
+                if ($(this).is(':checked')) {
+                    $('#selectedEmails .card-body').html('<p>Semua pengguna akan menerima email ini.</p>');
+                    selectedEmails = [];
+                } else {
+                    updateSelectedEmails();
+                }
+            });
+    
+            function updateSelectedEmails() {
+                let emailHtml = '';
+                selectedEmails.forEach(email => {
+                    emailHtml += `<div class="selected-email">${email} <button type="button" class="remove-email" data-email="${email}"><i class="fas fa-trash-alt"></i></button></div>`;
+                });
+                $('#selectedEmails .card-body').html(emailHtml);
+            }
+    
+            $(document).on('click', '.remove-email', function () {
+                const email = $(this).data('email');
+                selectedEmails = selectedEmails.filter(e => e !== email);
+                updateSelectedEmails();
+            });
+    
+            $('#sendEmailForm').on('submit', function () {
+                if ($('#sendToAll').is(':checked')) {
+                    $('<input>').attr({
+                        type: 'hidden',
+                        name: 'sendToAll',
+                        value: true
+                    }).appendTo('#sendEmailForm');
+                } else {
+                    selectedEmails.forEach(email => {
+                        $('<input>').attr({
+                            type: 'hidden',
+                            name: 'selectedEmails',
+                            value: email
+                        }).appendTo('#sendEmailForm');
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

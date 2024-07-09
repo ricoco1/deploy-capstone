@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profil Pengguna - Hotel Telaga Mas</title>
+    {% include 'admin/import/head_import.html' %}
+
+    <style>
+        .profile-container {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .profile-picture {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .profile-info {
+            margin-top: 20px;
+        }
+
+        .profile-info input,
+        .profile-info select {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    {% include 'admin/profile/sidebar.html' %}
+
+    <section>
+        <div class="container py-5">
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card mb-4">
+                        <div class="card-body text-center">
+                            <img src="{{ admin_info . profile_picture_url }}" alt="Foto Profil"
+                                class="profile-picture mb-3">
+                            <h5 class="my-3">{{ admin_info . full_name }}</h5>
+                            <p class="text-muted mb-1">{{ admin_info . email }}</p>
+                            <div class="d-flex justify-content-center mb-2">
+                                <form method="POST" action="{{ url_for('admin_upload_photo') }}"
+                                    enctype="multipart/form-data">
+                                    <input type="file" name="profile_picture" accept="image/*"
+                                        class="form-control form-control-sm form-control-file mb-3">
+                                    <button type="submit" class="btn btn-primary">Unggah Foto</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <form method="POST" action="{{ url_for('admin_edit_profile') }}">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="mb-0">Nama Lengkap</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="fullName"
+                                            value="{{ admin_info . full_name }}">
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="mb-0">Email</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="email" class="form-control" name="email"
+                                            value="{{ admin_info . email }}" readonly>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="mb-0">Role</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="role" class="form-control" name="role"
+                                            value="{{ admin_info . role }}" readonly>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="mb-0">Nomor Telepon</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="phoneNumber"
+                                            value="{{ admin_info . phone_number }}">
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="mb-0">Tanggal Lahir</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="birthDate" name="birthDate"
+                                            value="{{ admin_info . birth_date }}">
+                                    </div>
+                                </div>
+
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="mb-0">Jenis Kelamin</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <select class="form-control" name="gender">
+                                            <option value="Laki-Laki"
+                                                {% if admin_info.gender == 'Laki-Laki' %}selected{% endif %}>Laki-laki
+                                            </option>
+                                            <option value="Perempuan"
+                                                {% if admin_info.gender == 'Perempuan' %}selected{% endif %}>Perempuan
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="mb-0">Alamat</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="address"
+                                            value="{{ admin_info . address }}" placeholder="Alamat">
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="mb-0">Kota</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="city"
+                                            value="{{ admin_info . city }}" placeholder="Kota">
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="mb-0">Provinsi</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="region"
+                                            value="{{ admin_info . region }}" placeholder="Provinsi">
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="mb-0">Kode Pos</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="postalCode"
+                                            value="{{ admin_info . postal_code }}" placeholder="Kode Pos">
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    </div>
+</div>    
+
+<script>
+        $(document).ready(function() {
+            $('#birthDate').datepicker({
+                format: 'yyyy-mm-dd', // Format tanggal yang diinginkan
+                autoclose: true,
+                language: 'en'
+            });
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/air-datepicker/dist/js/i18n/datepicker.en.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/air-datepicker/dist/js/datepicker.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename = 'style/admin/js/main.js') }}"></script>
+
+
+
+</body>
+
+</html>

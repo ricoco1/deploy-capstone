@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Hotel Telaga Mas</title>
+    <meta property="og:title" content="Login Hotel Telaga Mas" />
+    <meta property="og:description" content="Hotel Telaga Mas " />
+    <meta property="og:image" content="{{ url_for('static', filename = 'img/image-hotel/foto-depan-hotel.jpg') }}" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../static/style.css">
+    <link rel="stylesheet" href="../../static/style/login.css">
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
+
+</head>
+
+<body>
+    <div class="spinner-overlay hidden" id="loading-spinner">
+        <dotlottie-player src="https://lottie.host/ecc98912-6550-4a1b-8622-df5acef885fd/xcW4L0NEca.json" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></dotlottie-player>
+    </div>
+
+    <section class="container" data-aos="zoom-in" data-aos-duration="500" id="main-content">
+        <header class="title">Login</header>
+        <form id="login-form" class="form" action="/sign_in" method="POST">
+            <div class="field">
+                <label class="label required-field">Alamat Email</label>
+                <div class="control">
+                    <div class="wrap-input-9">
+                        <input class="input" type="email" name="email" placeholder="Masukan Email">
+                        <span class="focus-border">
+                            <i></i>
+                        </span>
+                    </div>
+                </div>
+                <p class="help is-danger">Alamat Email yang valid wajib diisi</p>
+            </div>
+
+            <div class="field">
+                <label class="label required-field">Kata Sandi</label>
+                <div class="control">
+                    <div class="wrap-input-9">
+                        <input class="input" type="password" name="password" id="password" placeholder="Masukan Kata Sandi">
+                        <span class="focus-border">
+                            <i></i>
+                        </span>
+                    </div>
+                </div>
+                <p class="help is-danger">Kata Sandi wajib diisi</p>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <label class="checkbox">
+                        <input type="checkbox" id="togglePassword"> Tampilkan Kata Sandi
+                    </label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="g-recaptcha" data-sitekey="6LcoD0MpAAAAALnm2TQ4LhpP4zRWFwao_MMKLg1u"></div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <!-- Pembanagan Animasi Button -->
+                    <button type="submit" onclick="sign_in()" class="button is-primary">Login</button>
+                </div>
+            </div>
+            <div class="field">
+                <p class="compact">Lupa kata sandi? <a href="{{ url_for('forget_password') }}">Klik di sini</a></p>
+                <p class="compact">Belum punya akun? <a href="{{ url_for('register') }}">Daftar di sini</a></p>
+                <p class="compact">Back to <a href="{{ url_for('home') }}">Home</a></p>
+            </div>
+        </form>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#togglePassword').on('change', function () {
+                const passwordField = $('#password');
+                const type = $(this).is(':checked') ? 'text' : 'password';
+                passwordField.attr('type', type);
+            });
+    
+            $('#login-form').on('submit', function (event) {
+                event.preventDefault();
+                let isValid = true;
+    
+                $('input').each(function () {
+                    let $input = $(this);
+                    let $helpText = $input.closest('.field').find('.help.is-danger');
+    
+                    if ($input.val().trim() === '') {
+                        $helpText.show();
+                        isValid = false;
+                    } else {
+                        $helpText.hide();
+                    }
+                });
+    
+                if (isValid) {
+                    $('#loading-spinner').removeClass('hidden');
+                    $('#main-content').addClass('blurred');
+                    $('.button.is-primary').prop('disabled', true);
+    
+                    let email = $('#login-form input[name="email"]').val();
+                    let password = $('#login-form input[name="password"]').val();
+                    let recaptcha = grecaptcha.getResponse();
+    
+                    if (recaptcha === "") {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'reCAPTCHA harus diisi.',
+                        });
+                        $('#loading-spinner').addClass('hidden'); 
+                        $('#main-content').removeClass('blurred'); 
+                        $('.button.is-primary').prop('disabled', false);
+                        return;
+                    }
+    
+                    $.ajax({
+                        type: 'POST',
+                        url: '/sign_in',
+                        data: {
+                            email: email,
+                            password: password,
+                            'g-recaptcha-response': recaptcha
+                        },
+                        success: function (response) {
+                            if (response.result === 'success') {
+                                window.location.href = '/user/index';
+                            } else if (response.result === 'unverified') {
+                                Swal.fire({
+                                    icon: 'warning',
+                                    title: 'Akun belum diverifikasi',
+                                    text: 'Silakan periksa email Anda untuk verifikasi akun.',
+                                });
+                                $('#loading-spinner').addClass('hidden');
+                                $('#main-content').removeClass('blurred'); 
+                                $('.button.is-primary').prop('disabled', false);
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: response.msg,
+                                });
+                                $('#loading-spinner').addClass('hidden');
+                                $('#main-content').removeClass('blurred');
+                                $('.button.is-primary').prop('disabled', false);
+                            }
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            alert('Error: ' + textStatus);
+                            $('#loading-spinner').addClass('hidden');
+                            $('#main-content').removeClass('blurred');
+                            $('.button.is-primary').prop('disabled', false);
+                        }
+                    });
+                }
+            });
+            AOS.init();
+        });
+    </script>
+</body>
+
+</html>

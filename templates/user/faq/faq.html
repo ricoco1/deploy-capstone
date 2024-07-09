@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>FAQ | Hotel Telaga Mas</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    {% include 'user/home/head_import.html' %}
+    <link rel="stylesheet" href="../../static/style/user/all_user.css">
+</head>
+
+<body>
+    {% include 'user/faq/header_indo.html' %}
+
+    <div class="hero-wrap" style="background-image: url('../../static/img/home/images/testimony.jpg');">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text d-flex align-itemd-center justify-content-center">
+                <div class="col-md-9 ftco-animate text-center d-flex align-items-end justify-content-center">
+                    <div class="text">
+                        <p class="breadcrumbs mb-2"><span class="mr-2"><a href="{{ url_for('home') }}">Beranda</a></span> <span>Pertanyaan?</span></p>
+                        <h1 class="mb-4 bread">Pertanyaan?</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="ftco-section contact-section bg-light">
+        <div class="faq_area section_padding_130" id="faq">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-sm-8 col-lg-6">
+                        <div class="section_heading text-center wow fadeInUp" data-wow-delay="0.2s"
+                            style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+                            <h3><span>Pertanyaan </span> yang Sering Diajukan</h3>
+                            <div class="line"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-12 col-sm-10 col-lg-8">
+                        <div class="accordion faq-accordian" id="faqAccordion">
+                            {% for faq in faqs %}
+                            <div class="card border-0 wow fadeInUp" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+                                <div class="card-header" id="heading{{ loop.index }}">
+                                    <h6 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapse{{ loop.index }}" aria-expanded="true" aria-controls="collapse{{ loop.index }}">{{ faq.pertanyaan }}<span class="lni-chevron-up"></span></h6>
+                                </div>
+                                <div class="collapse" id="collapse{{ loop.index }}" aria-labelledby="heading{{ loop.index }}" data-parent="#faqAccordion">
+                                    <div class="card-body">
+                                        <p>{{ faq.jawaban }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="support-button text-center d-flex align-items-center justify-content-center mt-4 wow fadeInUp" data-wow-delay="0.7s"
+                            style="visibility: visible; animation-delay: 0.7s; animation-name: fadeInUp;">
+                            <i class="lni-emoji-sad"></i>
+                            <p class="mb-0 px-2">Tidak menemukan pertanyaan kamu?</p>
+                            <a href="https://wa.link/c5iyyy" target="_blank"> Hubungi Kami</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% include 'user/home/footer.html' %}
+
+    <!-- loader -->
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
+            <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4"
+                stroke="#eeeeee" />
+            <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4"
+                stroke-miterlimit="10" stroke="#F96D00" />
+        </svg></div>
+    {% include 'user/home/script_import.html' %}
+
+</body>
+
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Telaga Mas</title>
+    <meta property="og:title" content="Reservasi Hotel Telaga Mas" />
+    <meta property="og:description" content="Hotel Telaga Mas " />
+    <meta property="og:image" content="{{ url_for('static', filename = 'img/image-hotel/foto-depan-hotel.jpg') }}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="../../static/style/register.css">
+    <link rel="stylesheet" href="../../static/style/login.css">
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
+
+</head>
+
+<body>
+    <div class="spinner-overlay hidden" id="loading-spinner">
+        <dotlottie-player src="https://lottie.host/ecc98912-6550-4a1b-8622-df5acef885fd/xcW4L0NEca.json" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></dotlottie-player>
+    </div>
+    <section class="container" data-aos="zoom-in" data-aos-duration="500">
+        <header class="title">Register</header>
+
+        <!-- Flash Messages -->
+        <div id="flash-messages" class="notification is-danger" style="display: none;">
+            <p id="flash-message-content"></p>
+        </div>
+
+        <form id="registration-form" class="form">
+            <div class="field">
+                <label class="label required-field">Nama Lengkap</label>
+                <div class="control">
+                    <input class="input" type="text" name="fullName" placeholder="Masukkan nama lengkap" />
+                </div>
+                <p class="help is-danger">Nama Lengkap wajib diisi</p>
+            </div>
+
+            <div class="field">
+                <label class="label required-field">Alamat Email</label>
+                <div class="control">
+                    <input class="input" type="email" name="email" placeholder="Masukkan alamat email" />
+                </div>
+                <p class="help is-danger">Alamat Email yang valid wajib diisi</p>
+            </div>
+
+            <div class="field">
+                <label class="label required-field">Kata Sandi</label>
+                <div class="control">
+                    <input class="input" type="password" name="password" placeholder="Masukkan kata sandi" />
+                </div>
+                <p class="help is-danger">Kata Sandi wajib diisi dan harus minimal 8 karakter, mengandung setidaknya satu angka dan satu huruf besar</p>
+            </div>
+
+            <div class="field">
+                <label class="label required-field">Konfirmasi Kata Sandi</label>
+                <div class="control">
+                    <input class="input" type="password" name="confirmPassword" placeholder="Konfirmasi kata sandi" />
+                </div>
+                <p class="help is-danger">Kata Sandi harus sama</p>
+            </div>
+
+            <div class="field">
+                <label class="label required-field">Nomor Telepon</label>
+                <div class="control">
+                    <input class="input" type="text" name="phoneNumber" placeholder="Masukkan nomor telepon" />
+                </div>
+                <p class="help is-danger">Nomor Telepon wajib diisi dan harus berupa nomor yang valid</p>
+            </div>
+
+            <div class="field">
+                <label class="label required-field">Tanggal Lahir</label>
+                <div class="control">
+                    <input class="input" type="date" name="birthDate" placeholder="Masukkan tanggal lahir" />
+                </div>
+                <p class="help is-danger">Tanggal Lahir wajib diisi</p>
+            </div>
+
+            <div class="field">
+                <label class="label required-field">Jenis Kelamin</label>
+                <div class="control">
+                    <div class="select">
+                        <select name="gender">
+                            <option value="" hidden>Pilih jenis kelamin</option>
+                            <option value="Laki-Laki">Laki-laki</option>
+                            <option value="Perempuan">Perempuan</option>
+                        </select>
+                    </div>
+                </div>
+                <p class="help is-danger">Jenis Kelamin wajib dipilih</p>
+            </div>
+
+            <div class="field">
+                <label class="label required-field">Alamat</label>
+                <div class="control">
+                    <input class="input" type="text" name="address" placeholder="Masukkan alamat jalan" />
+                </div>
+                <p class="help is-danger">Alamat wajib diisi</p>
+            </div>
+
+            <div class="field">
+                <label class="label required-field">Kota</label>
+                <div class="control">
+                    <input class="input" type="text" name="city" placeholder="Masukkan kota" />
+                </div>
+                <p class="help is-danger">Kota wajib diisi</p>
+            </div>
+
+            <div class="field">
+                <label class="label required-field">Provinsi</label>
+                <div class="control">
+                    <input class="input" type="text" name="region" placeholder="Masukkan provinsi" />
+                </div>
+                <p class="help is-danger">Provinsi wajib diisi</p>
+            </div>
+
+            <div class="field">
+                <label class="label required-field">Kode Pos</label>
+                <div class="control">
+                    <input class="input" type="number" name="postalCode" placeholder="Masukkan kode pos" />
+                </div>
+                <p class="help is-danger">Kode Pos wajib diisi</p>
+            </div>
+            <div class="spinner-border text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <button type="submit" class="button is-primary">Daftar</button>
+                </div>
+            </div>
+
+            <div class="field">
+                <p>Sudah punya akun? <a href="{{ url_for('login') }}">Login di sini</a></p>
+            </div>
+        </form>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#registration-form').on('submit', function(event) {
+                event.preventDefault();
+                let isValid = true;
+
+                $('input, select').each(function() {
+                    const $input = $(this);
+                    const $helpText = $input.closest('.field').find('.help.is-danger');
+
+                    if ($input.is('select') && !$input.val()) {
+                        $helpText.show();
+                        isValid = false;
+                    } else if (!$input.is('select') && $input.val().trim() === '') {
+                        $helpText.show();
+                        isValid = false;
+                    } else {
+                        $helpText.hide();
+                    }
+                });
+
+                const password = $('input[name="password"]').val();
+                const confirmPassword = $('input[name="confirmPassword"]').val();
+                const passwordPattern = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+
+                if (!passwordPattern.test(password)) {
+                    $('input[name="password"]').closest('.field').find('.help.is-danger').show();
+                    isValid = false;
+                } else {
+                    $('input[name="password"]').closest('.field').find('.help.is-danger').hide();
+                }
+
+                if (password !== confirmPassword) {
+                    $('input[name="confirmPassword"]').closest('.field').find('.help.is-danger').show();
+                    isValid = false;
+                } else {
+                    $('input[name="confirmPassword"]').closest('.field').find('.help.is-danger').hide();
+                }
+
+                const phoneNumber = $('input[name="phoneNumber"]').val();
+                const phonePattern = /^[0-9]{10,15}$/;
+                const phoneHelpText = $('input[name="phoneNumber"]').closest('.field').find('.help.is-danger');
+                if (!phonePattern.test(phoneNumber)) {
+                    phoneHelpText.show();
+                    isValid = false;
+                } else {
+                    phoneHelpText.hide();
+                }
+
+                if (isValid) {
+                    $('#loading-spinner').removeClass('hidden');
+                    $('#main-content').addClass('blurred'); 
+                    $('.button.is-primary').prop('disabled', true);
+                    $.ajax({
+                        type: 'POST',
+                        url: '/register',
+                        data: $('#registration-form').serialize(),
+                        success: function(response) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Pendaftaran berhasil',
+                                text: 'Silakan cek email Anda untuk melihat kode OTP yang telah dikirim.',
+                                showConfirmButton: true
+                            }).then(() => {
+                                window.location.href = response.redirect;
+                            });
+                        },
+                        error: function(xhr, textStatus, errorThrown) {
+                            const errorMessage = xhr.responseJSON.error;
+                            
+                            $('#flash-message-content').text(errorMessage);
+                            $('#flash-messages').show();
+                        },
+                        complete: function() {
+                            $('.button.is-primary').prop('disabled', false);
+                            $('#loading-spinner').addClass('hidden'); 
+                            $('#main-content').removeClass('blurred'); 
+                        }
+                    });
+                }
+            });
+            AOS.init();
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - Hotel Telaga Mas</title>
+    {% include 'admin/import/head_import.html' %}
+
+</head>
+
+<body>
+    {% include 'admin/faq/sidebar.html' %}
+    <div class="container-xl">
+        <div class="table-responsive">
+            <div class="table-wrapper">
+                <div class="table-title">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h2>Kelola <b>Pertanyaan</b></h2>
+                        </div>
+                        <div class="col-sm-3 text-right">
+                            <a href="{{ url_for('admin_add_faq') }}" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Tambah</span></a>
+                            <a href="javascript:void(0);" id="bulkDeleteBtn" class="btn btn-danger"><i class="material-icons">&#xE15C;</i> <span>Hapus</span></a>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                <span class="custom-checkbox">
+                                    <input type="checkbox" id="selectAll">
+                                    <label for="selectAll"></label>
+                                </span>
+                            </th>
+                            <th>Pertanyaan</th>
+                            <th>Jawaban</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="faqTableBody">
+                        {% for faq in faqs %}
+                        <tr>
+                            <td>
+                                <span class="custom-checkbox">
+                                    <input type="checkbox" id="checkbox{{ loop.index }}" name="options[]" value="{{ faq['_id'] }}">
+                                    <label for="checkbox{{ loop.index }}"></label>
+                                </span>
+                            </td>
+                            <td>{{ faq.pertanyaan }}</td>
+                            <td>
+                                <div style="max-height: 100px; overflow-y: auto;">
+                                    {{ faq.jawaban }}</td>
+                                </div>
+                            <td>
+                                <a href="{{ url_for('admin_edit_faq', faq_id=faq['_id']) }}" class="edit" data-toggle="tooltip" title="Edit"><i class="material-icons">&#xE254;</i></a>
+                                <a href="javascript:void(0);" class="delete" data-id="{{ faq['_id'] }}"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="clearfix">
+                    <div class="hint-text">Menampilkan <b>{{ faqs|length }}</b> dari <b>{{ total_faqs }}</b> data</div>
+                    <ul class="pagination">
+                        <li class="page-item {% if page == 1 %}disabled{% endif %}">
+                            <a href="{{ url_for('admin_faq', page=page-1) }}" class="page-link">Previous</a>
+                        </li>
+                        {% for p in range(1, total_pages + 1) %}
+                        <li class="page-item {% if p == page %}active{% endif %}">
+                            <a href="{{ url_for('admin_faq', page=p) }}" class="page-link">{{ p }}</a>
+                        </li>
+                        {% endfor %}
+                        <li class="page-item {% if page == total_pages %}disabled{% endif %}">
+                            <a href="{{ url_for('admin_faq', page=page+1) }}" class="page-link">Next</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+
+            var checkbox = $('table tbody input[type="checkbox"]');
+            $("#selectAll").click(function(){
+                if(this.checked){
+                    checkbox.each(function(){
+                        this.checked = true;                        
+                    });
+                } else{
+                    checkbox.each(function(){
+                        this.checked = false;                        
+                    });
+                } 
+            });
+            checkbox.click(function(){
+                if(!this.checked){
+                    $("#selectAll").prop("checked", false);
+                }
+            });
+
+            $('.delete').click(function() {
+                var faqId = $(this).data('id');
+                Swal.fire({
+                    title: 'Apakah Anda yakin?',
+                    text: "Anda tidak dapat mengembalikan data yang telah dihapus!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, hapus!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: "{{ url_for('admin_delete_faq') }}",
+                            type: 'POST',
+                            data: { faq_id: faqId },
+                            success: function(response) {
+                                if(response.result === 'success') {
+                                    Swal.fire(
+                                        'Dihapus!',
+                                        'Pertanyaan telah dihapus.',
+                                        'success'
+                                    ).then(() => {
+                                        location.reload();
+                                    });
+                                } else {
+                                    Swal.fire(
+                                        'Gagal!',
+                                        response.msg,
+                                        'error'
+                                    );
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+
+            $('#bulkDeleteBtn').click(function() {
+                var selectedIds = [];
+                $('table tbody input[type="checkbox"]:checked').each(function() {
+                    selectedIds.push($(this).val());
+                });
+
+                if (selectedIds.length > 0) {
+                    Swal.fire({
+                        title: 'Apakah Anda yakin?',
+                        text: "Anda tidak dapat mengembalikan data yang telah dihapus!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Ya, hapus!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: "{{ url_for('admin_bulk_delete_faq') }}",
+                                type: 'POST',
+                                data: { faq_ids: selectedIds },
+                                success: function(response) {
+                                    if(response.result === 'success') {
+                                        Swal.fire(
+                                            'Dihapus!',
+                                            'Pertanyaan telah dihapus.',
+                                            'success'
+                                        ).then(() => {
+                                            location.reload();
+                                        });
+                                    } else {
+                                        Swal.fire(
+                                            'Gagal!',
+                                            response.msg,
+                                            'error'
+                                        );
+                                    }
+                                }
+                            });
+                        }
+                    });
+                } else {
+                    Swal.fire(
+                        'Tidak ada pertanyaan yang dipilih',
+                        'Silakan pilih pertanyaan yang ingin dihapus.',
+                        'warning'
+                    );
+                }
+            });
+        });
+    </script>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='style/admin/js/main.js') }}"></script>
+</body>
+
+</html>

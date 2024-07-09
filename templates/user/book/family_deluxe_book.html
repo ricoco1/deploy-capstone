@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Hotel Telaga Mas</title>
+    <meta property="og:title" content="Reservasi Hotel Telaga Mas" />
+    <meta property="og:description" content="Reservasi Family Deluxe Hotel Telaga Mas " />
+    <meta property="og:image" content="{{ url_for('static', filename = 'img/hotel-img/foto-hotel1.jpg') }}" />
+
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Library dayjs -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/dayjs.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../../../static/style/style.css">
+
+    <style>
+        .voucher-message-success {
+            color: green;
+        }
+
+        .voucher-message-error {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    {% include 'user/book/header.html' %}
+
+    <div class="container booking-container mt-5">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="form-card">
+                    <h4>Data Pemesan</h4>
+                    <p>Isi semua kolom dengan benar untuk memastikan kamu dapat menerima bukti pembayaran pemesanan di email yang dicantumkan.</p>
+                    <form id="bookingForm">
+                        <!-- Data Pemesan -->
+                        <div class="form-group">
+                            <label for="namaLengkap">Nama Lengkap</label>
+                            <input type="text" class="form-control" id="namaLengkap" name="namaLengkap" placeholder="Nama Lengkap" value="{{ user_info.full_name }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{ user_info.email }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="nomorHandphone">Nomor Handphone</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <select class="form-control" id="countryCode" name="countryCode">
+                                        <option value="+62">+62</option>
+                                    </select>
+                                </div>
+                                <input type="text" class="form-control" id="nomorHandphone" name="nomorHandphone" placeholder="Nomor Handphone" value="{{ user_info.phone_number }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Pesanan untuk:</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="pesananUntuk" id="sameAsBooker" value="Diri Sendiri" checked>
+                                <label class="form-check-label" for="sameAsBooker">
+                                    Sama dengan pemesan
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="pesananUntuk" id="bookForOthers" value="Orang Lain">
+                                <label class="form-check-label" for="bookForOthers">
+                                    Saya memesan untuk orang lain
+                                </label>
+                            </div>
+                        </div>
+
+                        <div id="guestNameField" class="form-group hidden">
+                            <label for="guestName">Nama Lengkap Tamu</label>
+                            <input type="text" class="form-control" id="guestName" name="guestName" placeholder="Nama Lengkap Tamu">
+                            <small>Masukkan nama tamu yang akan menginap di akomodasi</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lamaInap">Lama Menginap</label>
+                            <select class="form-control" id="lamaInap" name="lamaInap">
+                                {% for i in range(1, 15) %}
+                                <option value="{{ i }}" {% if i == lama_inap %}selected{% endif %}>{{ i }} Malam</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="form-card">
+                    <h4>Beri tahu di sini jika ada permintaan khusus</h4>
+                    <p>Ketersediaan permintaanmu akan diinformasikan pada waktu check-in. Biaya tambahan mungkin akan dikenakan tapi kamu masih bisa membatalkannya nanti.</p>
+
+                    <div class="checkbox-group">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="nonSmokingRoom" name="permintaanKhusus" value="Kamar Bebas Asap Rokok">
+                            <label class="form-check-label" for="nonSmokingRoom">Kamar Bebas Asap Rokok</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="connectingRoom" name="permintaanKhusus" value="Kamar dengan pintu penghubung">
+                            <label class="form-check-label" for="connectingRoom">Kamar dengan Pintu Penghubung</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="highFloor" name="permintaanKhusus" value="Lantai Atas">
+                            <label class="form-check-label" for="highFloor">Lantai Atas</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="bedType" name="permintaanKhusus" value="Tipe Ranjang">
+                            <label class="form-check-label" for="bedType">Tipe Ranjang</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="checkInTime" name="permintaanKhusus" value="Waktu Check-In">
+                            <label class="form-check-label" for="checkInTime">Waktu check-in</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="checkOutTime" name="permintaanKhusus" value="Waktu Check-out">
+                            <label class="form-check-label" for="checkOutTime">Waktu check-out</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="others" name="permintaanKhusus" value="Lainnya">
+                            <label class="form-check-label" for="others">Lainnya</label>
+                        </div>
+                    </div>
+
+                    <div id="othersDetails" class="hidden">
+                        <textarea class="form-control mt-3" id="othersText" name="othersText" rows="3" placeholder="Silakan isi permintaan khusus lainnya di sini..."></textarea>
+                        <small class="required-warning">Bagian ini wajib diisi</small>
+                    </div>
+                </div>
+                <div class="form-card">
+                    <div class="form-group">
+                        <label for="kodeVoucher">Kode Voucher</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="kodeVoucher" name="kodeVoucher" placeholder="Masukkan kode voucher">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary rounded-2" type="button" id="submitKodeVoucher">Gunakan</button>
+                                <button class="btn btn-secondary rounded-2 d-none" type="button" id="resetKodeVoucher">Reset</button> <!-- Tombol Reset -->
+                            </div>
+                        </div>
+                        <small id="voucherDescription" class="form-text"></small>
+                    </div>
+                </div>
+                <div class="price-card">
+                    <h4>Rincian harga</h4>
+                    <table class="table">
+                        <tr>
+                            <td>Harga Kamar</td>
+                            <td id="hargaKamar">Rp {{ harga_diskon }}</td>
+                        </tr>
+                        <tr id="diskonRow" class="d-none">
+                            <td>Diskon</td>
+                            <td id="hargaDiskon">- Rp 0</td>
+                        </tr>
+                        <tr>
+                            <th>Harga Total</th>
+                            <th id="hargaTotal">Rp {{ harga_diskon }}</th>
+                        </tr>
+                    </table>
+                    <p><i class="fa fa-info-circle"></i> Pesan sekarang sebelum harga berubah!</p>
+                    <button type="button" class="btn btn-danger btn-block" id="submitBooking">Lanjut ke Pembayaran</button>
+                    <p class="text-center mt-2">Dengan lanjut ke pembayaran, kamu telah menyetujui <a href="#">Syarat dan Ketentuan</a> serta <a href="#">Kebijakan Privasi</a> dari Hotel Telaga Mas.</p>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="hotel-info-card">
+                    <div class="header">
+                        <h5>Telaga Mas International Hotel</h5>
+                    </div>
+                    <img src="{{ url_for('static', filename='img/home/images/family.jpg') }}" alt="Telaga Mas International Hotel">
+                    <div class="row">
+                        <div class="col-md-6 mt-3">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <i class="fa fa-calendar-alt"></i>
+                                    <p>Check-in: {{ check_in_date }}</p> Dari 14:00
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mt-3">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <i class="fa fa-calendar-alt"></i>
+                                    <p id="checkOutDate">Check-out: {{ check_out_date }}</p>Sampai 12:00
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <ul>
+                        <li><i class="fa fa-user-friends"></i> 2 Tamu</li>
+                        <li><i class="fa fa-bed"></i> 1 Double Bed Atau 1 Ranjang Twin</li>
+                        <li><i class="fa fa-coffee"></i> Tanpa Sarapan</li>
+                        <li><i class="fa fa-wifi"></i> WiFi Gratis</li>
+                    </ul>
+                    <div class="pricing">
+                        <span class="discounted-price">Rp {{ harga_normal }}</span>
+                        <span class="total-price">Rp {{ harga_diskon }}</span>
+                        <p><span class="badge badge-success">Lebih murah dari biasanya!</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'footer/footer.html' %}
+
+    <!-- Font Awesome -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="../../../static/script/family_deluxe_book.js"></script>
+    <script src="https://app.midtrans.com/snap/snap.js" data-client-key="Mid-client-X1_yiXrVakxkv94e"></script>
+    <script>
+        var harga_normal = {{ harga_normal }};
+        var harga_diskon = {{ harga_diskon }};
+        var check_in_date = '{{ check_in_date }}';
+        var check_in_date_display = '{{ check_in_date_display }}';
+
+        function toggleSubmitButton() {
+            var hargaTotal = {{ harga_diskon }};
+            var submitButton = document.getElementById('submitBooking');
+            var checkInDate = new Date(check_in_date);
+            var today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            if (hargaTotal === 0 || checkInDate < today) {
+                submitButton.disabled = true;
+            } else {
+                submitButton.disabled = false;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleSubmitButton();
+        });
+        document.getElementById('kodeVoucher').addEventListener('input', function() {
+            // Mengonversi semua huruf menjadi kapital
+            this.value = this.value.toUpperCase();
+            
+            // Menghapus spasi dari input
+            this.value = this.value.replace(/\s+/g, '');
+        });
+    </script>
+</body>
+
+</html>

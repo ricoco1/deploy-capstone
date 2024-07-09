@@ -1,0 +1,30 @@
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="{{ url_for('home') }}">Telaga<span>Mas</span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+            aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="oi oi-menu"></span> Menu
+        </button>
+
+        <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a href="{{ url_for('home') }}" class="nav-link">Beranda</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('rooms') }}">Kamar</a></li>
+                <li class="nav-item"><a href="{{ url_for('facilities') }}" class="nav-link">Fasilitas</a></li>
+                <li class="nav-item active"><a href="{{ url_for('gallery') }}" class="nav-link">Galeri</a></li>
+                <li class="nav-item"><a href="{{ url_for('contact') }}" class="nav-link">Kontak</a></li>
+                <li class="nav-item"><a href="{{ url_for('faq') }}" class="nav-link">FAQ</a></li>
+                <li class="nav-item"><a href="{{ url_for('team_member') }}" class="nav-link">Team Member</a></li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ url_for('register') }}">Daftar</a>
+              </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('login') }}">Masuk</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- END nav -->

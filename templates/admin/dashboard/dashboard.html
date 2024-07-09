@@ -1,0 +1,129 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Hotel Telaga Mas</title>
+    {% include 'admin/import/head_import.html' %}
+
+    
+</head>
+<body>
+    {% include 'admin/dashboard/sidebar.html' %}
+
+    <div class="container mt-5" data-aos="fade-up">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Pendapatan</h5>
+                        <h6 class="card-title">Deluxe</h6>
+                        <p class="card-text">Rp{{ data.revenue | default(0) | number_format }}</p>
+                        <h6 class="card-title">Family Deluxe</h6>
+                        <p class="card-text">Rp{{ data.revenue_family_deluxe | default(0) | number_format }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Tamu</h5>
+                        <h6 class="card-title">Deluxe</h6>
+                        <p class="card-text">{{ data.total_guests | default(0) }}</p>
+                        <h6 class="card-title">Family Deluxe</h6>
+                        <p class="card-text">{{ data.total_guests_family_deluxe | default(0) }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="500">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Website</h5>
+                        <br>
+                        <a href="{{ url_for('home') }}" class="btn btn-primary">Klik di sini untuk melihat halaman website</a>
+                        <br><br><br>
+                    </div>
+                </div>
+            </div>                    
+        </div>
+
+        <div class="row mt-4" data-aos="fade-up" data-aos-delay="800">
+            <div class="col-lg-6 col-md-12 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Perbandingan Pendapatan</h5>
+                        <canvas id="revenueComparisonChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Perbandingan Tamu Deluxe dan Family Deluxe</h5>
+                        <canvas id="perbandinganTamu"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'admin/import/script_import.html' %}
+
+    <script>
+        AOS.init();
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const revenueDeluxe = {{ data.revenue | default(0) | tojson }};
+            const revenueFamilyDeluxe = {{ data.revenue_family_deluxe | default(0) | tojson }};
+
+            // Chart.js Pie Chart Perbandingan Pendapatan
+            const revenueComparisonCtx = document.getElementById('revenueComparisonChart').getContext('2d');
+            const revenueComparisonChart = new Chart(revenueComparisonCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['Deluxe', 'Family Deluxe'],
+                    datasets: [{
+                        data: [revenueDeluxe, revenueFamilyDeluxe],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                }
+            });
+            
+            const acceptedBookingsDeluxe = {{ data.accepted_bookings | default(0) | tojson }};
+            const acceptedBookingsFamilyDeluxe = {{ data.accepted_bookings_family_deluxe | default(0) | tojson }};
+
+            const statusComparisonDeluxeCtx = document.getElementById('perbandinganTamu').getContext('2d');
+            const perbandinganTamu = new Chart(statusComparisonDeluxeCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['Deluxe', 'Family Deluxe'],
+                    datasets: [{
+                        data: [ acceptedBookingsDeluxe, acceptedBookingsFamilyDeluxe],
+                        backgroundColor: [
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tambah Diskon - Hotel Telaga Mas</title>
+    {% include 'admin/import/head_import.html' %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+</head>
+
+<body>
+    {% include 'admin/discount/sidebar.html' %}
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                <h2>Tambah <b>Diskon</b></h2>
+            </div>
+            <div class="card-body">
+                <form id="discountForm" action="{{ url_for('admin_add_discount') }}" method="POST">
+                    <div class="form-group">
+                        <label>Kode Voucher</label>
+                        <input type="text" id="kodeVoucher" name="kode" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Jenis Diskon</label>
+                        <select name="jenis_diskon" id="jenis_diskon" class="form-control" required onchange="toggleDiscountFields()">
+                            <option value="persen">Persen</option>
+                            <option value="potongan">Potongan Harga</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="persen_field">
+                        <label>Persentase Diskon (%)</label>
+                        <input type="number" name="persentase" id="persentase" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Potongan Maksimal (Rp)</label>
+                        <input type="number" name="diskon_maks" class="form-control" required>
+                    </div>
+                    <div class="form-group" id="potongan_field" style="display:none;">
+                        <label>Potongan Diskon (Rp)</label>
+                        <input type="number" name="potongan" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Kuota Diskon Awal</label>
+                        <input type="number" name="kuota_awal" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Kuota Diskon</label>
+                        <input type="number" name="kuota" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Tanggal Berlaku</label>
+                        <input type="date" name="tanggal_mulai" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Tanggal Kadaluarsa</label>
+                        <input type="date" name="tanggal_akhir" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Deskripsi Diskon</label>
+                        <textarea name="deskripsi" class="form-control" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Tipe Kamar</label>
+                        <select name="tipe_kamar" class="form-control" required>
+                            <option value="deluxe">Deluxe</option>
+                            <option value="family deluxe">Family Deluxe</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-success">Simpan</button>
+                    <a href="{{ url_for('admin_discount') }}" class="btn btn-secondary">Batal</a>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename = 'style/admin/js/main.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function toggleDiscountFields() {
+            var jenisDiskon = document.getElementById('jenis_diskon').value;
+            var persenField = document.getElementById('persen_field');
+            var potonganField = document.getElementById('potongan_field');
+
+            if (jenisDiskon === 'persen') {
+                persenField.style.display = 'block';
+                potonganField.style.display = 'none';
+            } else if (jenisDiskon === 'potongan') {
+                persenField.style.display = 'none';
+                potonganField.style.display = 'block';
+            }
+        }
+
+        document.getElementById('discountForm').addEventListener('submit', function(event) {
+            var jenisDiskon = document.getElementById('jenis_diskon').value;
+            var persentase = document.getElementById('persentase').value;
+
+            if (jenisDiskon === 'persen' && (persentase < 0 || persentase > 100)) {
+                event.preventDefault();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Kesalahan',
+                    text: 'Persentase diskon harus antara 0 dan 100!'
+                });
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleDiscountFields();
+        });
+        document.getElementById('kodeVoucher').addEventListener('input', function() {
+            // Mengonversi semua huruf menjadi kapital
+            this.value = this.value.toUpperCase();
+            
+            // Menghapus spasi dari input
+            this.value = this.value.replace(/\s+/g, '');
+        });
+    </script>
+</body>
+
+</html>

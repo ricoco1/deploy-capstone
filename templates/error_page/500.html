@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Error 500 - Server Error!</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/error_page.css') }}">
+
+</head>
+
+<body>
+    <div class="container">
+        <img class="ops" src="{{ url_for('static', filename='img/error_page/500.svg') }}" alt="Forbidden" />
+        <br />
+        <h3>Kesalahan Server!
+            <br /> Terjadi kesalahan pada server kami. Silakan coba lagi nanti.
+        </h3>
+        <br />
+        <a class="buton" href="{{ url_for('home') }}">Kembali ke Beranda</a>
+    </div>
+</body>
+
+</html>

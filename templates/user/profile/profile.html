@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profil Pengguna - Hotel Telaga Mas</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Edu+TAS+Beginner:wght@400..700&family=Permanent+Marker&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Bulma CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../../../static/style/user/all_user.css" />
+    <link rel="stylesheet" href="../../../static/style/style.css" />
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+    .ulasan-profile {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+</style>
+  </head>
+
+  <body>
+    {% include 'user/profile/header.html' %}
+
+    <section>
+      <div class="container py-5">
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="card mb-4">
+              <div class="card-body text-center">
+                <img
+                  src="{{ user_info.profile_picture_url }}"
+                  alt="Foto Profil"
+                  class="profile-picture mb-3"
+                />
+                <h5 class="my-3">{{ user_info.full_name }}</h5>
+                <p class="text-muted mb-1">{{ user_info.email }}</p>
+                <div class="d-flex justify-content-center mb-2">
+                  <a
+                    href="{{ url_for('edit_profile') }}"
+                    class="btn btn-primary"
+                    >Edit Profil</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-8">
+            <div class="card mb-4">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Nama Lengkap</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0">{{ user_info.full_name }}</p>
+                  </div>
+                </div>
+                <hr />
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Email</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0">{{ user_info.email }}</p>
+                  </div>
+                </div>
+                <hr />
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Nomor Telepon</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0">{{ user_info.phone_number }}</p>
+                  </div>
+                </div>
+                <hr />
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Tanggal Lahir</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0">{{ user_info.birth_date }}</p>
+                  </div>
+                </div>
+                <hr />
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Jenis Kelamin</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0">{{ user_info.gender }}</p>
+                  </div>
+                </div>
+                <hr />
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Alamat</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0">
+                      {{ user_info.address }}, {{ user_info.city }}, {{
+                      user_info.region }} {{ user_info.postal_code }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <!-- Ulasan -->
+              <div class="container mt-3">
+                <h5>Review</h5>
+                {% for review in reviews %}
+                <div class="review-card mb-3">
+                  <div
+                    class="review-header d-flex justify-content-between align-items-center"
+                  >
+                    <div class="user-info d-flex align-items-center">
+                      <img
+                        src="{{ user_info.profile_picture_url }}"
+                        alt="Foto Pengguna"
+                        class="ulasan-profile mr-3"
+                      />
+                      <div>
+                        <div class="name">{{ user_info.full_name }}</div>
+                        <div class="date">
+                          {{ review.created_at.strftime('%d %B %Y') }}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <div class="rating mr-3">{{ review.rating }} / 5</div>
+                      <i
+                        class="fas fa-trash delete-icon"
+                        data-review-id="{{ review._id }}"
+                      ></i>
+                    </div>
+                  </div>
+                  <div class="review-content mt-2">{{ review.review }}</div>
+                </div>
+                {% endfor %}
+              </div>
+              <!-- End Ulasan -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {% include 'user/footer/footer.html' %}
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="../../../static/script/all_user.js"></script>
+    {% include 'user/home/script_import.html' %}
+  </body>
+</html>

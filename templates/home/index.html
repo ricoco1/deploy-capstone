@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Hotel Telaga Mas</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    {% include 'home/head_import.html' %}
+
+</head>
+
+<body>
+    {% include 'home/header_indo.html' %}
+    <div class="hero">
+        <section class="home-slider owl-carousel">
+            <div class="slider-item" style="background-image:url(../../../static/img/home/images/fasilitas.jpg);">
+                <div class="overlay"></div>
+                <div class="container">
+                    <div class="row no-gutters slider-text align-items-center justify-content-end">
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="slider-item" style="background-image:url(../../static/img/wisata/sarangan1.jpg);">
+                <div class="overlay"></div>
+                <div class="container">
+                    <div class="row no-gutters slider-text align-items-center justify-content-end">
+                        <div class="col-md-6 ftco-animate">
+                            <div class="text">
+                                <h2>Lebih dari sekadar hotel... sebuah pengalaman</h2>
+                                <h1 class="mb-3">Hotel untuk keluarga anda</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <section class="ftco-booking ftco-section ftco-no-pt ftco-no-pb">
+        <div class="container">
+            <div class="row no-gutters">
+                <div class="col-lg-12">
+                    <form action="#" class="booking-form aside-stretch">
+                        <div class="row">
+                            <div class="col-md d-flex py-md-4">
+                                <div class="form-group align-self-stretch d-flex align-items-end">
+                                    <div class="wrap align-self-stretch py-3 px-4">
+                                        <label for="checkin_date">Tanggal Check-in</label>
+                                        <input type="date" name="checkin_date" id="checkin_date" class="form-control checkin_date" placeholder="Check-in date">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md d-flex py-md-4">
+                                <div class="form-group align-self-stretch d-flex align-items-end">
+                                    <div class="wrap align-self-stretch py-3 px-4">
+                                        <label for="room">Kamar</label>
+                                        <div class="form-field">
+                                            <div class="select-wrap">
+                                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                                <select name="room" id="room" class="form-control">
+                                                    <option value="Deluxe">Kamar Deluxe</option>
+                                                    <option value="Family Deluxe">Kamar Family Deluxe</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <div class="col-md d-flex">
+                                <div class="form-group d-flex align-self-stretch">
+                                    <button type="button" id="search_button" class="btn btn-primary py-5 py-md-3 px-4 align-self-stretch d-block">
+                                        <span>Cek Ketersediaan Kamar <small>Jaminan Harga Terbaik</small></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row justify-content-center mb-5 pb-3">
+                <div class="col-md-7 heading-section text-center ftco-animate">
+                    <span class="subheading">Selamat Datang di Hotel Telaga Mas</span>
+                    <h2 class="mb-4">Menginap dengan Keindahan Alam</h2>
+                </div>
+            </div>
+            <div class="row d-flex">
+                <div class="col-md pr-md-1 d-flex align-self-stretch ftco-animate">
+                    <div class="media block-6 services py-4 d-block text-center">
+                        <div class="d-flex justify-content-center">
+                            <div class="icon d-flex align-items-center justify-content-center">
+                                <span class="flaticon-reception-bell"></span>
+                            </div>
+                        </div>
+                        <div class="media-body">
+                            <h3 class="heading mb-3">Resepsionis 24 Jam</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md px-md-1 d-flex align-self-stretch ftco-animate">
+                    <div class="media block-6 services active py-4 d-block text-center">
+                        <div class="d-flex justify-content-center">
+                            <div class="icon d-flex align-items-center justify-content-center">
+                                <span class="flaticon-serving-dish"></span>
+                            </div>
+                        </div>
+                        <div class="media-body">
+                            <h3 class="heading mb-3">Restoran</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md pl-md-1 d-flex align-self-stretch ftco-animate">
+                    <div class="media block-6 services py-4 d-block text-center">
+                        <div class="d-flex justify-content-center">
+                            <div class="icon d-flex align-items-center justify-content-center">
+                                <span class="ion-ios-bed"></span>
+                            </div>
+                        </div>
+                        <div class="media-body">
+                            <h3 class="heading mb-3">Kamar Nyaman</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md pl-md-1 d-flex align-self-stretch ftco-animate">
+                    <div class="media block-6 services py-4 d-block text-center">
+                        <div class="d-flex justify-content-center">
+                            <div class="icon d-flex align-items-center justify-content-center">
+                                <span class="ion-ios-wifi"></span>
+                            </div>
+                        </div>
+                        <div class="media-body">
+                            <h3 class="heading mb-3">Wifi</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md pl-md-1 d-flex align-self-stretch ftco-animate">
+                    <div class="media block-6 services py-4 d-block text-center">
+                        <div class="d-flex justify-content-center">
+                            <div class="icon d-flex align-items-center justify-content-center">
+                                <span class="ion-ios-car"></span>
+                            </div>
+                        </div>
+                        <div class="media-body">
+                            <h3 class="heading mb-3">Parkir Luas</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ftco-section ftco-wrap-about ftco-no-pt ftco-no-pb">
+        <div class="container">
+            <div class="row no-gutters">
+                <div class="col-md-7 order-md-last d-flex">
+                    <div class="img img-1 mr-md-2 ftco-animate"
+                        style="background-image: url(../../../static/img/home/images/bg_1.1.jpg);"></div>
+                    <div class="img img-2 ml-md-2 ftco-animate"
+                        style="background-image: url(../../../static/img/home/images/bg_2.1.jpg);"></div>
+                </div>
+                <div class="col-md-5 wrap-about pb-md-3 ftco-animate pr-md-5 pb-md-5 pt-md-4">
+                    <div class="heading-section mb-4 my-5 my-md-0">
+                        <span class="subheading">Tentang Telaga Mas Hotel</span>
+                        <h2 class="mb-4">Hotel Telaga Mas - Hotel Paling Direkomendasikan di Magetan</h2>
+                    </div>
+                    <p style="color: #555;">Terletak strategis dekat dengan Telaga Sarangan, Gunung Lawu, dan Air Terjun Tirtosari, Hotel
+                        Telaga Mas menawarkan pengalaman menginap yang tak terlupakan. Dikelilingi oleh keindahan alam
+                        Magetan, hotel ini adalah tempat yang sempurna untuk menikmati pesona alam dan ketenangan
+                        sepanjang tahun.</p>
+                    <p><a href="{{ url_for('book') }}" class="btn btn-secondary rounded">Pesan Kamar Sekarang</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimony-section">
+        <div class="container">
+            <div class="row no-gutters ftco-animate justify-content-center">
+                <div class="col-md-5 d-flex">
+                    <div class="testimony-img aside-stretch-2" style="background-image: url(../../../static/img/home/images/testimony.jpg);"></div>
+                </div>
+                <div class="col-md-7 py-5 pl-md-5">
+                    <div class="py-md-5">
+                        <div class="heading-section ftco-animate mb-4">
+                            <span class="subheading">Ulasan</span>
+                            <h2 class="mb-0">Ulasan Dari Pelanggan</h2>
+                        </div>
+                        <div class="carousel-testimony owl-carousel ftco-animate">
+                            {% for review in reviews %}
+                            <div class="item" data-aos="fade-up">
+                                <div class="testimony-wrap pb-4">
+                                    <div class="text" style="color: #555;">
+                                        <p class="mb-4">{{ review['review'] }}</p>
+                                        <p class="rating">
+                                            {% for i in range(5) %}
+                                                {% if i < review['rating'] %}
+                                                    <i class="fas fa-star" style="color: #FFD700;"></i>
+                                                {% else %}
+                                                    <i class="far fa-star" style="color: #FFD700;"></i>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </p>
+                                        <p class="date">{{ review['created_at'].strftime('%d %B %Y') }}</p>
+                                    </div>
+                                    <div class="d-flex">
+                                        <div class="user-img" style="background-image: url({{ review['profile_picture_url'] }})"></div>
+                                        <div class="pos ml-3">
+                                            <p class="name">
+                                                {% set name_parts = review['full_name'].split() %}
+                                                {{ name_parts[0][0] }}{{ '*' * (name_parts[0]|length - 1) }}
+                                                {% if name_parts|length > 1 %}
+                                                    {{ name_parts[1][0] }}{{ '*' * (name_parts[1]|length - 1) }}
+                                                {% endif %}
+                                            </p>
+                                            <span class="position" style="color: #555;">{{ review['tipe_kamar'] }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>    
+
+    <section class="instagram">
+        <div class="container-fluid">
+            <div class="row no-gutters justify-content-center pb-5">
+                <div class="col-md-7 text-center heading-section ftco-animate">
+                    <span class="subheading">Foto</span>
+                    <h2><span>Instagram</span></h2>
+                </div>
+            </div>
+            <div class="row no-gutters">
+                <div class="col-sm-12 col-md ftco-animate">
+                    <a href="../../../static/img/home/images/insta-1.1.jpg" class="insta-img image-popup"
+                        style="background-image: url(../../../static/img/home/images/insta-1.1.jpg);">
+                        <div class="icon d-flex justify-content-center">
+                            <span class="icon-instagram align-self-center"></span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-12 col-md ftco-animate">
+                    <a href="../../../static/img/home/images/insta-2.2.jpg" class="insta-img image-popup"
+                        style="background-image: url(../../../static/img/home/images/insta-2.2.jpg);">
+                        <div class="icon d-flex justify-content-center">
+                            <span class="icon-instagram align-self-center"></span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-12 col-md ftco-animate">
+                    <a href="../../../static/img/home/images/insta-3.3.jpg" class="insta-img image-popup"
+                        style="background-image: url(../../../static/img/home/images/insta-3.3.jpg);">
+                        <div class="icon d-flex justify-content-center">
+                            <span class="icon-instagram align-self-center"></span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-12 col-md ftco-animate">
+                    <a href="../../../static/img/home/images/insta-4.4.jpg" class="insta-img image-popup"
+                        style="background-image: url(../../../static/img/home/images/insta-4.4.jpg);">
+                        <div class="icon d-flex justify-content-center">
+                            <span class="icon-instagram align-self-center"></span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-12 col-md ftco-animate">
+                    <a href="../../../static/img/home/images/insta-5.5.jpg" class="insta-img image-popup"
+                        style="background-image: url(../../../static/img/home/images/insta-5.5.jpg);">
+                        <div class="icon d-flex justify-content-center">
+                            <span class="icon-instagram align-self-center"></span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% include 'home/footer.html' %}
+
+    <!-- loader -->
+    <div id="ftco-loader" class="show fullscreen">
+        <svg class="circular" width="48px" height="48px">
+            <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4"
+                stroke="#eeeeee" />
+            <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4"
+                stroke-miterlimit="10" stroke="#F96D00" />
+        </svg>
+    </div>
+    {% include 'home/script_import.html' %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var checkinDateInput = document.getElementById('checkin_date');
+            var today = new Date().toISOString().split('T')[0];
+            checkinDateInput.setAttribute('min', today);
+        });
+    
+        document.getElementById('search_button').addEventListener('click', function() {
+            var checkinDate = document.getElementById('checkin_date').value;
+            var roomType = document.getElementById('room').value;
+            
+            if (checkinDate) {
+                window.location.href = '/book?check_in_date=' + checkinDate + '&room=' + roomType;
+            } else {
+                Swal.fire({
+                    icon: "info",
+                    title: "Silakan pilih tanggal check-in terlebih dahulu."
+                });
+            }
+        });
+
+    </script>
+</body>
+
+</html>
+

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Kontak | Hotel Telaga Mas</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    {% include 'home/head_import.html' %}
+
+  </head>
+  <body>
+    {% include 'contact/header_indo.html' %}
+
+		<div class="hero-wrap" style="background-image: url('../../static/img/home/images/testimony.jpg');">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text d-flex align-itemd-center justify-content-center">
+          <div class="col-md-9 ftco-animate text-center d-flex align-items-end justify-content-center">
+          	<div class="text">
+	            <p class="breadcrumbs mb-2"><span class="mr-2"><a href="{{ url_for('home') }}">Beranda</a></span> <span>Kontak Kami</span></p>
+	            <h1 class="mb-4 bread">Kontak Kami</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="ftco-section contact-section bg-light">
+      <div class="container">
+        <div class="row d-flex mb-5 contact-info">
+          <div class="col-md-12 mb-4">
+            <h2 class="h3">Informasi Kontak</h2>
+          </div>
+          <div class="col-md-3 d-flex">
+          	<div class="info rounded bg-white p-4" data-aos="fade-right">
+	            <p><span>Alamat:</span><a href="https://maps.app.goo.gl/rY2S2PbW8WKeTVJ5A" target="_blank" rel="noopener noreferrer">Telaga Pasir, Sarangan, Plaosan, Magetan Regency, East Java</a></p>
+	          </div>
+          </div>
+          <div class="col-md-3 d-flex">
+          	<div class="info rounded bg-white p-4" data-aos="fade-up">
+	            <p><span>No Whatsapp:</span> <a href="https://wa.link/c5iyyy">+62-821-2232-8078</a></p>
+	          </div>
+          </div>
+          <div class="col-md-3 d-flex">
+          	<div class="info rounded bg-white p-4" data-aos="fade-up">
+	            <p><span>Email:</span> <a href="mailto:hoteltelagamas@gmail.com">hoteltelagamas@gmail.com</a></p>
+	          </div>
+          </div>
+          <div class="col-md-3 d-flex">
+          	<div class="info rounded bg-white p-4" data-aos="fade-left">
+	            <p><span>Website</span> <a href="#">hoteltelagamas.com</a></p>
+	          </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="container mb-5" data-aos="fade-up">
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2040.7674578910305!2d111.220277337501!3d-7.677766463322165!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e798de1ad9c2f8f%3A0xea92b08ec1ccb496!2sHotel%20Telaga%20Mas%20Sarangan!5e0!3m2!1sen!2sid!4v1716351867984!5m2!1sen!2sid"
+            width="100%" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false"
+            tabindex="0">
+        </iframe>
+    </div>
+
+    {% include 'home/footer.html' %}
+
+
+  <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+  {% include 'home/script_import.html' %}
+
+  </body>
+</html>

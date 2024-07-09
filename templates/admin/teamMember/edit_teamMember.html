@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Team Member - Hotel Telaga Mas</title>
+    {% include 'admin/import/head_import.html' %}
+</head>
+
+<body>
+    {% include 'admin/teamMember/sidebar.html' %}
+    <div class="container-xl">
+        <div class="table-responsive">
+            <div class="table-wrapper">
+                <div class="table-title">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h2>Edit <b>Team Member</b></h2>
+                        </div>
+                    </div>
+                </div>
+                <form action="{{ url_for('admin_edit_team_member', team_member_id=team_member._id) }}" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label>Nama</label>
+                        <input type="text" name="name" class="form-control" value="{{ team_member.nama }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Role</label>
+                        <input type="text" name="role" class="form-control" value="{{ team_member.role }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Institusi</label>
+                        <input type="text" name="institution" class="form-control" value="{{ team_member.universitas }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Gambar</label>
+                        <input type="file" name="image" class="form-control" accept="image/*">
+                        <input type="hidden" name="current_image" value="{{ team_member.profile }}">
+                        <img src="{{ team_member.profile }}" alt="Current Image" style="width: 100px; margin-top: 10px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Instagram</label>
+                        <input type="text" name="instagram" class="form-control" value="{{ team_member.link_instagram }}">
+                    </div>
+                    <div class="form-group">
+                        <label>LinkedIn</label>
+                        <input type="text" name="linkedin" class="form-control" value="{{ team_member.link_linkedin }}">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success">Simpan</button>
+                        <a href="{{ url_for('admin_teamMember') }}" class="btn btn-secondary">Batal</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% include 'admin/import/script_import.html' %}
+</body>
+
+</html>

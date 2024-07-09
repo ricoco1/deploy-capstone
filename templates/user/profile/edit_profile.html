@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profil Pengguna - Hotel Telaga Mas</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Edu+TAS+Beginner:wght@400..700&family=Permanent+Marker&display=swap" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    
+
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/air-datepicker/dist/css/datepicker.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../../../static/style/style.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../static/style/user/all_user.css">
+</head>
+
+<body>
+    {% include 'user/profile/header.html' %}
+
+    <section style="background-color: #eee;">
+        <div class="container py-5">
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card mb-4">
+                        <div class="card-body text-center">
+                            <img src="{{ user_info . profile_picture_url }}" alt="Foto Profil"
+                                class="profile-picture mb-3">
+                            <h5 class="my-3">{{ user_info . full_name }}</h5>
+                            <p class="text-muted mb-1">{{ user_info . email }}</p>
+                            <div class="d-flex justify-content-center mb-2">
+                                <form method="POST" action="{{ url_for('upload_photo') }}"
+                                    enctype="multipart/form-data">
+                                    <input type="file" name="profile_picture" accept="image/*"
+                                        class="form-control form-control-sm form-control-file mb-3">
+                                    <button type="submit" class="btn btn-primary">Unggah Foto</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <form method="POST" action="{{ url_for('edit_profile') }}">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="mb-0">Nama Lengkap</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="fullName"
+                                            value="{{ user_info . full_name }}">
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="mb-0">Email</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="email" class="form-control" name="email"
+                                            value="{{ user_info . email }}" readonly>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="mb-0">Nomor Telepon</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="phoneNumber"
+                                            value="{{ user_info . phone_number }}">
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="mb-0">Tanggal Lahir</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="date" class="form-control" id="birthDate" name="birthDate"
+                                            value="{{ user_info . birth_date }}">
+                                    </div>
+                                </div>
+
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="mb-0">Jenis Kelamin</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <select class="form-control" name="gender">
+                                            <option value="Laki-Laki"
+                                                {% if user_info.gender == 'Laki-Laki' %}selected{% endif %}>Laki-laki
+                                            </option>
+                                            <option value="Perempuan"
+                                                {% if user_info.gender == 'Perempuan' %}selected{% endif %}>Perempuan
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="mb-0">Alamat</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="address"
+                                            value="{{ user_info . address }}" placeholder="Alamat">
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="mb-0">Kota</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="city"
+                                            value="{{ user_info . city }}" placeholder="Kota">
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="mb-0">Provinsi</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="region"
+                                            value="{{ user_info . region }}" placeholder="Provinsi">
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="mb-0">Kode Pos</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="postalCode"
+                                            value="{{ user_info . postal_code }}" placeholder="Kode Pos">
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% include 'user/footer/footer.html' %}
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/air-datepicker/dist/js/i18n/datepicker.en.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/air-datepicker/dist/js/datepicker.min.js"></script>
+
+
+
+</body>
+
+</html>

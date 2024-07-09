@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Booking Pengguna - Hotel Telaga Mas</title>
+    {% include 'admin/import/head_import.html' %}
+
+</head>
+
+<body>
+    {% include 'admin/profile/sidebar.html' %}
+
+    <section>
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-lg-8">
+                    <form id="editBookingForm" method="POST" action="{{ url_for('admin_edit_family_guest', guest_id=guest['_id']) }}">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="mb-0">Kode Booking</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="bookingCode" value="{{ guest.booking_code }}" readonly>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="mb-0">Nama Lengkap</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="namaLengkap" value="{{ guest.nama_lengkap }}" readonly>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="mb-0">Email</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="email" class="form-control" name="email" value="{{ guest.email }}" readonly>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="mb-0">Nomor Handphone</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="nomorHandphone" value="{{ guest.nomor_handphone }}" readonly>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="mb-0">Pesanan Untuk</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="pesananUntuk" value="{{ guest.pesanan_untuk }}" readonly>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="mb-0">Nama Tamu</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="guestName" value="{{ guest.guest_name }}">
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="mb-0">Lama Inap</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="lamaInap" value="{{ guest.lama_inap }}" readonly>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="mb-0">Harga Normal</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="hargaNormal" value="{{ guest.harga_normal }}" readonly>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="mb-0">Harga Diskon</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="hargaDiskon" value="{{ guest.harga_diskon }}" readonly>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="mb-0">Harga Total</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="hargaTotal" value="{{ guest.harga_total }}" readonly>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="mb-0">Check In</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="checkInDate" value="{{ guest.check_in_date }}">
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="mb-0">Check Out</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="checkOutDate" value="{{ guest.check_out_date }}">
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label class="mb-0">Status</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <select id="statusSelect" class="form-control" name="status">
+                                            <option value="pesanan diterima" {% if guest.status == 'terima' %}selected{% endif %}>Terima</option>
+                                            <option value="pesanan ditolak" {% if guest.status == 'tolak' %}selected{% endif %}>Tolak</option>
+                                            <option value="pesanan dibatalkan" {% if guest.status == 'dibatalkan' %}selected{% endif %}>Batalkan</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div id="alasanPenolakanContainer" class="row" style="display: none;">
+                                    <div class="col-sm-3">
+                                        <label class="mb-0">Alasan Penolakan</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <textarea id="alasanPenolakan" class="form-control" name="alasan_penolakan" rows="3"></textarea>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var statusSelect = document.getElementById('statusSelect');
+        var alasanPenolakanContainer = document.getElementById('alasanPenolakanContainer');
+        var alasanPenolakan = document.getElementById('alasanPenolakan');
+        var form = document.getElementById('editBookingForm');
+
+        statusSelect.addEventListener('change', function() {
+            if (this.value === 'pesanan ditolak') {
+                alasanPenolakanContainer.style.display = 'block';
+            } else {
+                alasanPenolakanContainer.style.display = 'none';
+                alasanPenolakan.removeAttribute('required');
+            }
+        });
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Check if alasan penolakan is required and empty
+            if (statusSelect.value === 'pesanan ditolak' && !alasanPenolakan.value.trim()) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Alasan penolakan wajib diisi jika status ditolak.'
+                });
+                return;
+            }
+
+            // Display success message and redirect
+            Swal.fire({
+                icon: 'success',
+                title: 'Data berhasil disimpan',
+                showConfirmButton: false,
+                timer: 1500
+            }).then(() => {
+                form.submit();
+            });
+        });
+    });
+    </script>
+</body>
+
+</html>

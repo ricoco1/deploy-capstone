@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Kamar | Hotel Telaga Mas</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    {% include 'home/head_import.html' %}
+
+  </head>
+  <body>
+
+    {% include 'room/header_indo.html' %}
+
+		<div class="hero-wrap" style="background-image:url(../../../static/img/home/images/deluxe.jpg);">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text d-flex align-itemd-center justify-content-center">
+          <div class="col-md-9 ftco-animate text-center d-flex align-items-end justify-content-center">
+          	<div class="text">
+	            <p class="breadcrumbs mb-2"><span class="mr-2"><a href="{{ url_for('home') }}">Beranda</a></span><span>Kamar</span></p>
+	            <h1 class="mb-4 bread">Kamar</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="ftco-section ftco-no-pb ftco-room">
+    	<div class="container-fluid px-0">
+    		<div class="row no-gutters justify-content-center mb-5 pb-3">
+          <div class="col-md-7 heading-section text-center ftco-animate">
+          	<span class="subheading">Hotel Telaga Mas</span>
+            <h2 class="mb-4">Tipe Kamar Hotel</h2>
+          </div>
+        </div>  
+    		<div class="row no-gutters">
+    			<div class="col-lg-6">
+    				<div class="room-wrap d-md-flex ftco-animate">
+    					<a href="#" class="img" style="background-image:url('../../static/img/room/deluxe/deluxe-img.jpg');"></a>
+    					<div class="half left-arrow d-flex align-items-center">
+    						<div class="text p-4 text-center">
+    							<p class="star mb-0"><span class="ion-ios-star"></span><span class="ion-ios-star"></span><span class="ion-ios-star"></span></span></p>
+    							<p class="mb-0"><span class="price mr-1">Rp {{ format_currency(deluxe_room.discount_price | default(0)) }}</span> <span class="per">per malam</span></p>
+	    						<h3 class="mb-3"><a href="#">Kamar Duluxe</a></h3>
+	    						<p class="pt-1"><a href="{{ url_for('deluxe_room') }}" class="btn-custom px-3 py-2 rounded">Lihat Rincian <span class="icon-long-arrow-right"></span></a></p>
+    						</div>
+    					</div>
+    				</div>
+    			</div>
+    			<div class="col-lg-6">
+    				<div class="room-wrap d-md-flex ftco-animate">
+    					<a href="#" class="img" style="background-image:url(../../static/img/room/family-deluxe/family-deluxe.jpg);"></a>
+    					<div class="half left-arrow d-flex align-items-center">
+    						<div class="text p-4 text-center">
+    							<p class="star mb-0"></span><span class="ion-ios-star"></span><span class="ion-ios-star"></span><span class="ion-ios-star"></p>
+    							<p class="mb-0"><span class="price mr-1">Rp {{ format_currency(deluxe_family_room.discount_price | default(0)) }}</span> <span class="per">per malam</span></p>
+	    						<h3 class="mb-3"><a href="#">Kamar Family Deluxe</a></h3>
+	    						<p class="pt-1"><a href="{{ url_for('deluxe_family') }}" class="btn-custom px-3 py-2 rounded">Lihat Rincian <span class="icon-long-arrow-right"></span></a></p>
+    						</div>
+    					</div>
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    </section>
+
+    {% include 'home/footer.html' %}
+
+  <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+
+  {% include 'home/script_import.html' %}
+
+  </body>
+</html>

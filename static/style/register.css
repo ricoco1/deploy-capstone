@@ -1,0 +1,41 @@
+.container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 15px;
+}
+
+@media (min-width: 768px) {
+    .container {
+        width: 75%;
+        margin: 0 12.5%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        width: 50%;
+        margin: 0 25%;
+    }
+}
+
+.required-field::after {
+    content: " *";
+    color: red;
+}
+
+.help.is-danger {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .field label {
+        font-size: 0.9em;
+    }
+
+    .field input, 
+    .field select, 
+    .field button {
+        font-size: 0.9em;
+    }
+}   

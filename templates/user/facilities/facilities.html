@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Fasilitas | Hotel Telaga Mas</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    {% include 'user/home/head_import.html' %}
+
+  </head>
+  <body>
+    {% include 'user/facilities/header.html' %}
+    <div class="hero-wrap" style="background-image: url('../../static/img/home/images/fasil.jpg');">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text d-flex align-itemd-center justify-content-center">
+          <div class="col-md-9 ftco-animate text-center d-flex align-items-end justify-content-center">
+          	<div class="text">
+	            <p class="breadcrumbs mb-2"><span class="mr-2"><a href="{{ url_for('home') }}">Beranda</a></span> <span>Fasilitas</span></p>
+	            <h1 class="mb-4 bread">Fasilitas</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="ftco-section">
+      <div class="container">
+        <div class="row d-flex">
+          <div class="col-md-6 d-flex ftco-animate">
+            <div class="blog-entry align-self-stretch">
+              <a href="#" class="block-20 rounded" style="background-image: url('../../static/img/fasilitas/metting.jpg');">
+              </a>
+              <div class="text mt-3">
+                <h3 class="heading"><a href="#">Gedung Pertemuan</a></h3>
+                <p style="color: #555;">Fasilitas gedung pertemuan kami mampu menampung banyak tamu, cocok untuk acara besar seperti seminar, konferensi, dan pernikahan.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 d-flex ftco-animate">
+            <div class="blog-entry align-self-stretch">
+              <a href="#" class="block-20 rounded" style="background-image: url('../../static/img/fasilitas/meeting.jpg');">
+              </a>
+              <div class="text mt-3">
+                <h3 class="heading"><a href="#">Meeting Room</a></h3>
+                <p style="color: #555;">Meeting room kami dilengkapi dengan fasilitas modern untuk mendukung produktivitas pertemuan bisnis Anda.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 d-flex ftco-animate">
+            <div class="blog-entry align-self-stretch">
+              <a href="#" class="block-20 rounded" style="background-image: url('../../static/img/fasilitas/parkir.jpg');">
+              </a>
+              <div class="text mt-3">
+                <h3 class="heading"><a href="#">Parkir yang Luas</a></h3>
+                <p style="color: #555;">Area parkir yang luas tersedia untuk kenyamanan tamu kami, memastikan kendaraan Anda aman dan mudah diakses.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 d-flex ftco-animate">
+            <div class="blog-entry align-self-stretch">
+              <a href="#" class="block-20 rounded" style="background-image: url('../../static/img/fasilitas/outdoor.jpg');">
+              </a>
+              <div class="text mt-3">
+                <h3 class="heading"><a href="#">Area Pertemuan Outdoor</a></h3>
+                <p style="color: #555;">Manfaatkan area pertemuan outdoor kami untuk acara-acara yang memerlukan suasana yang lebih santai dan alami.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    {% include 'user/home/footer.html' %}
+
+    <!-- loader -->
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+    {% include 'user/home/script_import.html' %}
+  </body>
+</html>

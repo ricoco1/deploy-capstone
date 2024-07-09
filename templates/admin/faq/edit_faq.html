@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit FAQ - Hotel Telaga Mas</title>
+    {% include 'admin/import/head_import.html' %}
+
+</head>
+
+<body>
+    {% include 'admin/faq/sidebar.html' %}
+
+    <div class="container">
+        <h1 class="title">Edit Pertanyaan FAQ</h1>
+        
+        <form action="{{ url_for('admin_edit_faq', faq_id=faq['_id']) }}" method="post">
+            <div class="form-group">
+                <label for="question">Pertanyaan</label>
+                <input type="text" class="form-control" id="question" name="question" value="{{ faq['pertanyaan'] }}" required>
+            </div>
+            <div class="form-group">
+                <label for="answer">Jawaban</label>
+                <textarea class="form-control" id="answer" name="answer" rows="3" required>{{ faq['jawaban'] }}</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='style/admin/js/main.js') }}"></script>
+</body>
+
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengaturan - Hotel Telaga Mas</title>
+    {% include 'admin/import/head_import.html' %}
+</head>
+<body>
+    {% include 'admin/settings/sidebar.html' %}
+    
+    <div class="container mt-5">
+        <h1>Pengaturan</h1>
+        <form method="POST" action="{{ url_for('admin_settings') }}">
+            <div class="form-group">
+                <label for="registerEnabled">Status Registrasi Admin</label>
+                <select id="registerEnabled" name="registerEnabled" class="form-control">
+                    <option value="" disabled {% if register_enabled is none %}selected{% endif %}>Silahkan pilih</option>
+                    <option value="active" {% if register_enabled %}selected{% endif %}>Aktif</option>
+                    <option value="inactive" {% if register_enabled is not none and not register_enabled %}selected{% endif %}>Nonaktif</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="loginEnabled">Status Login User</label>
+                <select id="loginEnabled" name="loginEnabled" class="form-control">
+                    <option value="" disabled {% if login_enabled is none %}selected{% endif %}>Silahkan pilih</option>
+                    <option value="active" {% if login_enabled %}selected{% endif %}>Aktif</option>
+                    <option value="inactive" {% if login_enabled is not none and not login_enabled %}selected{% endif %}>Nonaktif</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="teamMemberEnabled">Status Team Member</label>
+                <select id="teamMemberEnabled" name="teamMemberEnabled" class="form-control">
+                    <option value="" disabled {% if team_member_enabled is none %}selected{% endif %}>Silahkan pilih</option>
+                    <option value="active" {% if team_member_enabled %}selected{% endif %}>Aktif</option>
+                    <option value="inactive" {% if team_member_enabled is not none and not team_member_enabled %}selected{% endif %}>Nonaktif</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Simpan Pengaturan</button>
+        </form>
+    </div>
+</div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename = 'style/admin/js/main.js') }}"></script>
+</body>
+</html>

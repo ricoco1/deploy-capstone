@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Gallery - Hotel Telaga Mas</title>
+
+    {% include 'admin/import/head_import.html' %}
+
+</head>
+
+<body>
+    {% include 'admin/room/sidebar.html' %}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h2>Edit Gallery</h2>
+                <form id="editGalleryForm" action="{{ url_for('admin_edit_gallery', gallery_id=gallery_item['_id']) }}" method="POST" enctype="multipart/form-data" novalidate>
+                    <div class="form-group">
+                        <label for="gallery_picture">Upload Gambar</label>
+                        <input type="file" class="form-control" id="gallery_picture" name="gallery_picture" accept="image/*" required>
+                        <div class="invalid-feedback">Silakan pilih gambar.</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Gambar Saat Ini</label>
+                        <div>
+                            <img src="{{ gallery_item['gallery_picture_url'] }}" alt="Gallery Image" style="max-width: 200px;">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                    <a href="{{ url_for('admin_gallery') }}" class="btn btn-secondary">Batal</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Bootstrap form validation
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+                var form = document.getElementById('editGalleryForm');
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            }, false);
+        })();
+    </script>
+</body>
+
+</html>

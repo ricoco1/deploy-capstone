@@ -1,0 +1,267 @@
+/* style halaman profile */
+.profile-container {
+    max-width: 800px;
+    margin: auto;
+}
+
+.profile-picture {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-info {
+    margin-top: 20px;
+}
+
+.profile-info input,
+.profile-info select {
+    margin-bottom: 10px;
+}
+
+.delete-icon {
+    cursor: pointer;
+    color: red;
+}
+/* style halaman edit profile */
+.profile-container {
+    max-width: 800px;
+    margin: auto;
+}
+
+.profile-picture {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-info {
+    margin-top: 20px;
+}
+
+.profile-info input,
+.profile-info select {
+    margin-bottom: 10px;
+}
+
+/* style halaman family deluxe book */
+.booking-header {
+    margin-bottom: 20px;
+}
+
+.booking-section {
+    margin-bottom: 20px;
+}
+
+.hotel-info-card,
+.form-card,
+.price-card {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #f8f8f8;
+    margin-bottom: 20px;
+}
+
+.hotel-info-card img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.discounted-price {
+    text-decoration: line-through;
+    color: red;
+}
+
+.total-price {
+    font-size: 24px;
+    font-weight: bold;
+    color: #d9534f;
+}
+
+.form-check-label {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.checkbox-group .form-check {
+    flex: 1 1 45%;
+    min-width: 200px;
+}
+
+.hidden {
+    display: none;
+}
+
+.required-warning {
+    color: red;
+    font-size: 12px;
+}
+/* SCRIPT DELUXE BOOK */
+.booking-header {
+    margin-bottom: 20px;
+}
+
+.booking-section {
+    margin-bottom: 20px;
+}
+
+.hotel-info-card,
+.form-card,
+.price-card {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #f8f8f8;
+    margin-bottom: 20px;
+}
+
+.hotel-info-card img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.discounted-price {
+    text-decoration: line-through;
+    color: red;
+}
+
+.total-price {
+    font-size: 24px;
+    font-weight: bold;
+    color: #d9534f;
+}
+
+.form-check-label {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.checkbox-group .form-check {
+    flex: 1 1 45%;
+    min-width: 200px;
+}
+
+.hidden {
+    display: none;
+}
+
+.required-warning {
+    color: red;
+    font-size: 12px;
+}
+
+/* style halaman faq */
+.section_padding_130 {
+    padding-bottom: 130px;
+}
+
+.faq_area {
+    position: relative;
+    z-index: 1;
+    background-color: #f5f5ff;
+}
+
+.faq-accordian {
+    position: relative;
+    z-index: 1;
+}
+
+.faq-accordian .card {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 1.5rem;
+}
+
+.faq-accordian .card:last-child {
+    margin-bottom: 0;
+}
+
+.faq-accordian .card .card-header {
+    background-color: #ffffff;
+    padding: 0;
+    border-bottom-color: #ebebeb;
+}
+
+.faq-accordian .card .card-header h6 {
+    cursor: pointer;
+    padding: 1.75rem 2rem;
+    color: #3f43fd;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -ms-grid-row-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+
+.faq-accordian .card .card-header h6 span {
+    font-size: 1.5rem;
+}
+
+.faq-accordian .card .card-header h6.collapsed {
+    color: #070a57;
+}
+
+.faq-accordian .card .card-header h6.collapsed span {
+    -webkit-transform: rotate(-180deg);
+    transform: rotate(-180deg);
+}
+
+.faq-accordian .card .card-body {
+    padding: 1.75rem 2rem;
+}
+
+.faq-accordian .card .card-body p:last-child {
+    margin-bottom: 0;
+}
+
+@media only screen and (max-width: 575px) {
+    .support-button p {
+        font-size: 14px;
+    }
+}
+
+.support-button i {
+    color: #3f43fd;
+    font-size: 1.25rem;
+}
+
+@media only screen and (max-width: 575px) {
+    .support-button i {
+        font-size: 1rem;
+    }
+}
+
+.support-button a {
+    text-transform: capitalize;
+    color: #2ecc71;
+}
+
+@media only screen and (max-width: 575px) {
+    .support-button a {
+        font-size: 13px;
+    }
+}
+
+p{
+    color: #555;
+}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    {% include 'home/head_import.html' %}
+
+  </head>
+  <body>
+    {% include 'room/header_indo.html' %}
+
+    <div class="hero-wrap" style="background-image: url('../../static/img/home/images/galeri.jpg');">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text d-flex align-itemd-center justify-content-center">
+          <div class="col-md-9 ftco-animate text-center d-flex align-items-end justify-content-center">
+          	<div class="text">
+              <p class="breadcrumbs mb-2"><span class="mr-2"><a href="{{ url_for('user_index') }}">Beranda</a></span> <span class="mr-2"><a href="{{ url_for('rooms') }}">Kamar</a></span> <span>Kamar Deluxe</span></p>
+              <h1 class="mb-4 bread">Rincian Kamar</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <section class="ftco-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="row">
+              <div class="col-md-12 ftco-animate">
+                <div class="single-slider owl-carousel">
+                  <div class="item">
+                    <div class="room-img" style="background-image:url('../../static/img/room/deluxe/kamar-deluxe1.jpg');"></div>
+                  </div>
+                  <div class="item">
+                    <div class="room-img" style="background-image:url('../../static/img/room/deluxe/kamar-deluxe2.jpg');"></div>
+                  </div>
+                  <div class="item">
+                    <div class="room-img" style="background-image:url('../../static/img/room/deluxe/kamar-deluxe3.jpg');"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 room-single mt-4 mb-5 ftco-animate">
+                <h2 class="mb-4">Kamar Deluxe</h2>
+                <p style="color: #555;">Kamar Deluxe kami menawarkan kenyamanan dan kemewahan dengan desain modern dan fasilitas lengkap. Nikmati suasana yang tenang dan pemandangan yang indah dari kamar Anda.</p>
+                <div class="d-md-flex mt-5 mb-5">
+                  <ul class="list">
+                    <li style="color: #555;"><span>Maximal:</span> 2 Orang</li>
+                    <li style="color: #555;"><span>Ukuran:</span> 18 m2</li>
+                  </ul>
+                  <ul class="list ml-md-5">
+                    <li style="color: #555;"><span>Kasur:</span> Single atau Double Bed</li>
+                  </ul>
+                </div>
+                <p style="color: #555;">Kamar Deluxe dilengkapi dengan berbagai fasilitas modern termasuk AC, TV layar datar, Wi-Fi gratis, dan kamar mandi pribadi dengan shower air panas. Nikmati juga layanan kamar yang tersedia 24 jam untuk kenyamanan Anda.</p>
+              </div>
+            </div>
+          </div> 
+          <div class="col-lg-4 sidebar ftco-animate pl-md-5">
+            <!-- ini bagian Duluxe Deskripsi Promosi -->
+             <!-- End Description -->
+            <div class="sidebar-box ftco-animate">
+              <h3>Tingkatkan Pengalaman Menginap Anda dengan Kamar Deluxe</h3>
+              <strong style="color: #555;">Harga Spesial untuk Anda!</strong>
+              <p style="color: #555;">Nikmati malam yang sempurna di kamar Deluxe kami, lengkap dengan fasilitas mewah dan layanan istimewa. Pesan sekarang dan rasakan kenyamanan serta kemewahan yang sebenarnya!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section> <!-- .section -->
+
+    {% include 'home/footer.html' %}
+
+    <!-- loader -->
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+    {% include 'home/script_import.html' %}
+  
+  </body>
+</html>
